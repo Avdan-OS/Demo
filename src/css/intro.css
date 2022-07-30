@@ -1,0 +1,85 @@
+:root {
+	--inner-first-color: black;
+	--outer-first-color: white;
+}
+
+@keyframes outer-animate {
+	0% {
+		fill: var(--inner-first-color);
+	}
+	25% {
+		fill: var(--inner-first-color);
+	}
+	75% {
+		fill: var(--outer-first-color);
+	}
+	100% {
+		fill: var(--inner-first-color);
+	}
+}
+
+@keyframes make-visible { /*blink svg*/
+	0% {
+		opacity : 1;
+		visibility: visible;
+	}
+	90% {
+		opacity : 1;
+	}
+	100% {
+		opacity : 0;
+		visibility: hidden;
+	}
+}
+
+.intro {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	visibility: hidden;
+	opacity: 0;
+	animation-name : make-visible;
+	animation-duration : 5.7s;
+	background-color: var(--inner-first-color);
+}
+
+.intro-title {
+	width: 50vw;
+}
+
+#a1, #v, #d, #a2, #n, #o, #s {
+	fill: var(--inner-first-color);
+	animation-name: outer-animate;
+	animation-duration: 2.6s;
+}
+
+#a1 {
+	animation-delay : 1s;
+}
+
+#v {
+	animation-delay : 1.1s;
+}
+
+#d {
+	animation-delay : 1.2s;
+}
+
+#a2 {
+	animation-delay : 1.3s;
+}
+
+#n {
+	animation-delay : 1.4s;
+}
+
+#o {
+	animation-delay : 1.5s;
+}
+
+#s {
+	animation-delay : 1.6s;
+}
