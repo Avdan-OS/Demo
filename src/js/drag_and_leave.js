@@ -81,6 +81,17 @@ const drag = e => {
 	// go through dragList
 	dragList.forEach(item => {
 		var target = document.querySelector(item.target);
+		//
+		// control element function while drag
+		if (typeof item.currentTarget_f == "function") {
+			item.currentTarget_f(e, document.querySelector(item.currentTarget), item);
+		}
+
+		// target function while drag
+		if (typeof item.target_f == "function") {
+			item.target_f(e, target, item);
+		}
+
 		var targetTransformX = 0;
 		var targetTransformY = 0;
 		if (target.style.transform != '') {
@@ -90,16 +101,6 @@ const drag = e => {
 			
 			targetTransformX = parseInt(nums[0]);
 			targetTransformY = parseInt(nums[1]);
-		}
-
-		// control element function while drag
-		if (typeof item.currentTarget_f == "function") {
-			item.currentTarget_f(e, document.querySelector(item.currentTarget), item);
-		}
-
-		// target function while drag
-		if (typeof item.target_f == "function") {
-			item.target_f(e, target, item);
 		}
 
 		var movementX = item.modify_X && e.movementX || 0;

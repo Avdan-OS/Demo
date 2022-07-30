@@ -1701,19 +1701,19 @@ scrollBarGenerate(scroll_list_g);
 // -- //
 
 var app_bar = document.querySelector(".app-bar");
-app_bar.addEventListener("mousedown", e => {dragAdd(e, ".app-bar", ".app-bar", barDropTransition, undefined, undefined, undefined, insertBar)});
+app_bar.addEventListener("mousedown", e => {dragAdd(e, ".app-bar", ".app-bar", barDropTransition, undefined, swapBar, undefined, insertBar)});
 window.addEventListener("mouseup", e => {leave(e, ".app-bar")});
 
 var menu_bar = document.querySelector(".menu-bar");
-menu_bar.addEventListener("mousedown", e => {dragAdd(e, ".menu-bar", ".menu-bar", barDropTransition, undefined, undefined, undefined, insertBar)});
+menu_bar.addEventListener("mousedown", e => {dragAdd(e, ".menu-bar", ".menu-bar", barDropTransition, undefined, swapBar, undefined, insertBar)});
 window.addEventListener("mouseup", e => {leave(e, ".menu-bar")});
 
 var scroll_bar = document.querySelector(".scroll-bar");
-scroll_bar.addEventListener("mousedown", e => {dragAdd(e, ".scroll-bar", ".scroll-bar", barDropTransition, undefined, undefined, undefined, insertBar)});
+scroll_bar.addEventListener("mousedown", e => {dragAdd(e, ".scroll-bar", ".scroll-bar", barDropTransition, undefined, swapBar, undefined, insertBar)});
 window.addEventListener("mouseup", e => {leave(e, ".scroll-bar")});
 
 var info_bar = document.querySelector(".info-bar");
-info_bar.addEventListener("mousedown", e => {dragAdd(e, ".info-bar", ".info-bar", barDropTransition, undefined, undefined, undefined, insertBar)});
+info_bar.addEventListener("mousedown", e => {dragAdd(e, ".info-bar", ".info-bar", barDropTransition, undefined, swapBar, undefined, insertBar)});
 window.addEventListener("mouseup", e => {leave(e, ".info-bar")});
 
 // -- S E T T I N G S -- //

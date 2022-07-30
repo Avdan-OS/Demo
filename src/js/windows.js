@@ -598,6 +598,60 @@ const insertBar = (e, target, info) => {
 	target.style.zIndex = null;
 }
 
+const swapBar = (e, target, info) => {
+	var dock = document.querySelector(".dock");
+
+	if (!target.classList.contains("dragged")) {
+		for (var i = 0; i < dock.children.length; i++) {
+			var item = dock.children[i];
+			if (item != target) {
+				var x1 = dock.offsetLeft + item.offsetLeft;
+				var y1 = dock.offsetTop + item.offsetTop;
+				var y2 = y1 + item.offsetHeight;
+
+				if (x1 <= e.clientX && e.clientX <= (x1 + item.offsetWidth/2) && y1 <= e.clientY && e.clientY <= y2) {
+					var targetTransformX = 0;
+					var targetTransformY = 0;
+					if (target.style.transform != '') {
+					
+						var nums = target.style.transform.split("translate3d")[1];
+						nums = nums.slice(1, nums.length-1).split("px,");
+						
+						targetTransformX = parseInt(nums[0]);
+						targetTransformY = parseInt(nums[1]);
+					}
+
+					var offsetBefore = target.offsetLeft;
+					target.parentElement.insertBefore(target, item);
+					var offsetAfter = target.offsetLeft;
+
+					target.style.transform = `translate3d(${targetTransformX+(offsetBefore-offsetAfter)}px,${targetTransformY}px,0px)`;
+					return
+				}
+				else if ((x1 + item.offsetWidth/2) <= e.clientX && e.clientX <= (x1 + item.offsetWidth) && y1 <= e.clientY && e.clientY <= y2) {
+					var targetTransformX = 0;
+					var targetTransformY = 0;
+					if (target.style.transform != '') {
+					
+						var nums = target.style.transform.split("translate3d")[1];
+						nums = nums.slice(1, nums.length-1).split("px,");
+						
+						targetTransformX = parseInt(nums[0]);
+						targetTransformY = parseInt(nums[1]);
+					}
+
+					var offsetBefore = target.offsetLeft;
+					target.parentElement.insertBefore(target, item.nextSibling);
+					var offsetAfter = target.offsetLeft;
+
+					target.style.transform = `translate3d(${targetTransformX+(offsetBefore-offsetAfter)}px,${targetTransformY}px,0px)`;
+					return
+				}
+			}
+		}
+	}
+}
+
 // W I N D O W  C O N T R O L  F U N C  F O R  W I N D O W  S T A C K I N G
 
 const insertCheck = (e, target, info) => {
@@ -765,6 +819,19 @@ const moveIcon = (e, target, info) => {
 
 			// check if over
 			if (x1, x2, y1, y2, x1 <= e.clientX && e.clientX <= x2 && y1 <= e.clientY && e.clientY <= y2) {
+
+				var targetTransformX = 0;
+				var targetTransformY = 0;
+				if (target.style.transform != '') {
+				
+					var nums = target.style.transform.split("translate3d")[1];
+					nums = nums.slice(1, nums.length-1).split("px,");
+					
+					targetTransformX = parseInt(nums[0]);
+					targetTransformY = parseInt(nums[1]);
+				}
+
+				var offsetBefore = target.offsetLeft;
 				// check flag
 				if (insertAfter) {
 					item.parentElement.insertBefore(target, item.nextSibling);
@@ -772,10 +839,10 @@ const moveIcon = (e, target, info) => {
 				else {
 					item.parentElement.insertBefore(target, item);
 				}
+				var offsetAfter = target.offsetLeft;
 
-				// if moved
-				target.style.transform = null;
-				target.style.zIndex = null;
+				target.style.transform = `translate3d(${targetTransformX+(offsetBefore-offsetAfter)}px,${targetTransformY}px,0px)`;
+
 				return
 			}
 		}
@@ -783,8 +850,9 @@ const moveIcon = (e, target, info) => {
 			insertAfter = true;
 		}
 	});
+}
 
-	// set transition to move back
+const returnIcon = (e, target, info) => {
 	target.style.transition = "transform 0.1s ease-in-out";
 	target.style.transform = null;
 	target.style.zIndex = null;
@@ -1224,7 +1292,7 @@ const appBarGenerate = apps_list_l => { // local app list
 			img.src = item["src"];
 			img.id = `app-icon${i}`;
 			i+=1; // increment id
-			img.addEventListener("mousedown", e => {dragAdd(e, `#${img.id}`, `#${img_container.id}`, undefined, iconDropTransition, undefined, undefined, undefined, moveIcon)});
+			img.addEventListener("mousedown", e => {dragAdd(e, `#${img.id}`, `#${img_container.id}`, undefined, iconDropTransition, undefined, moveIcon, undefined, returnIcon)});
 
 			// create underlines container
 			var underlines = document.createElement("div");
