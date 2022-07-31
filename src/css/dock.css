@@ -1,0 +1,266 @@
+/*
+ * +---------------+
+ * | :: D O C K :: |
+ * +---------------+
+ */
+
+.dock {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	margin: 0.5rem 0 0.5rem 0;
+	display: flex;
+	gap: 1rem;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	height: calc(2.5rem + 2%);
+}
+
+.scroll-bar, .menu-bar, .app-bar, .info-bar {
+	display: flex;
+	backdrop-filter: blur(40px);
+	background-color: var(--dark-bg);
+	height: 75%;
+	border-radius: 0.5rem;
+	padding: 0.5rem 0.75rem 0.5rem 0.75rem;
+}
+
+.app-bar {
+	gap: 0.5rem;
+	flex-direction: row;
+}
+
+.img-container img {
+	height: 100%;
+	cursor: pointer;
+	z-index: 1;
+}
+
+.img-wrapper {
+	transform: scale(1);
+	transition: transform 0.1s ease-in-out;
+	height: 90%;
+	margin-bottom: 10%;
+}
+
+.img-wrapper:hover {
+	transform: scale(1.1);
+}
+
+.underlines {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(4px, 1fr));
+	height: 6px;
+	gap: 2px;
+}
+
+.underline {
+	background-color: var(--light-bg-hl);
+	width: 100%;
+	border-radius: 0.25rem; 
+	transition: background-color 0.1s ease-in-out;
+	cursor: pointer;
+}
+
+.app-split, .bar-split {
+	background-color: var(--light-bg-hl);
+	border-style: solid;
+    border-width: 2px;
+    border-color: var(--light-bg-hl);
+    border-radius: 1rem;
+}
+
+.hider-holder {
+	display: flex;
+	align-items: center;
+}
+
+.hider-holder img {
+	height: 35%;
+	cursor: pointer;
+}
+
+.menu-bar, .info-bar {
+	align-items: center;
+	gap: 0.5rem;
+	height: 100%;
+	box-sizing: border-box;
+}
+
+.bar-split {
+	height: 90%;
+	margin: 0 0.5rem 0 0.5rem;
+}
+
+.dock .dragged {
+	height: 100%;
+	padding: 0;
+	background-color: transparent;
+	backdrop-filter: none;
+}
+
+.menu-icon, .info-icon {
+	transition: transform 0.1s ease-in-out;
+	cursor: pointer;
+	margin: 0 0.625rem 0 0.625rem;
+}
+
+.menu-icon {
+	height: 50%;
+}
+
+.menu-bar svg linearGradient stop:nth-child(1) {
+	stop-color: var(--start-color);
+}
+
+.menu-bar svg linearGradient stop:nth-child(2) {
+	stop-color: var(--finish-color);;
+}
+
+.menu-bar svg path {
+	fill: url(#grad1);
+}
+
+.info-icon {
+	height: 65%;
+	stroke: white;
+}
+
+.menu-icon:hover, .info-icon:hover {
+	transform: scale(1.1);
+}
+
+.scroll-bar {
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.weather-time {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 2.5rem;
+	height: 100%;
+	pointer-events: none;
+}
+
+.time-panel {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+.curr-time {
+	font-size: 0.95rem;
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
+.curr-date {
+	font-size: 0.8rem;
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
+.weather-panel {
+	height: 35%;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	align-items: center;
+	gap: 0.75rem;
+}
+
+.weather-panel svg {
+	stroke: #ffc107;
+	stroke-width: 2px;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	height: 100%;
+	fill: #ffc107;
+}
+
+.weather-grad {
+	font-size: 0.95rem;
+}
+
+.player-holder {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.5rem;
+	height: 100%;
+}
+
+.player {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 1rem;
+	height: calc(100% - 0.75rem);
+}
+
+.duration-bar-holder {
+	background-color: var(--light-bg);
+	width: 100%;
+	height: 0.25rem;
+	border-radius: 0.25rem;
+	cursor: pointer;
+}
+
+.duration-bar {
+	background-color: var(--light-bg-hl);
+	width: 0%;
+	height: 0.25rem;
+	border-radius: 0.25rem;
+}
+
+.player-icon, .player-control {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	height: 100%;
+}
+
+.player-icon img {
+	height: 100%;
+	transition: transform 0.1s ease-in-out;
+	border-radius: 0.25rem;
+	cursor: pointer;
+}
+
+.player-icon img:hover {
+	transform: scale(1.05) !important;
+}
+
+.player-title {
+	font-size: 0.95rem;
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
+.player-artist {
+	font-size: 0.8rem;
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
+.player-control {
+	gap: 1rem;
+}
+
+.player-control svg {
+	height: 70%;
+	transition: transform 0.1s ease-in-out;
+	cursor: pointer;
+}
+
+.player-control svg:first-child:hover {
+	transform: rotate(180deg) scale(1.1) !important;
+}
+
+.player-control svg:nth-child(n+2):hover {
+	transform: scale(1.1) !important;
+}
