@@ -238,7 +238,7 @@ document.querySelector("#avdan-menu").addEventListener("click", e => {
 	}
 	else {
 		var menu = makeWindow(menu_content, undefined, "Menu", ["avdan-menu"], false, false, false);
-		document.body.appendChild(menu);
+		demo_body.appendChild(menu);
 		menu.style.transform = `translate3d(${window.innerWidth/2-menu.offsetWidth/2}px, ${(window.innerHeight-document.querySelector('.dock').offsetHeight)-(menu.offsetHeight+16)}px, 0)`;
 		menuLaunched = true;
 	}

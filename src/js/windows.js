@@ -1,3 +1,4 @@
+var demo_body = document.querySelector(".demo-body") || document.body;
 var z_index_g = 1; // global z-index counter
 
 // -- W I N D O W  C O N T R O L
@@ -449,7 +450,7 @@ const remakeWindow = (e, target, info) => {
 
 			// recreate window
 			var win = makeWindow(target_content_holder.firstChild || document.createElement("div"), icon_src, target.innerHTML);
-			document.body.appendChild(win);
+			demo_body.appendChild(win);
 			win.style.top = window.innerHeight/2-win.offsetHeight/2+"px";
 			win.style.left = window.innerWidth/2-win.offsetWidth/2+"px";
 
@@ -1323,7 +1324,7 @@ const appBarGenerate = apps_list_l => { // local app list
 				// create window
 				var defaultFunc = content => {};
 				var win = makeWindow(item.content, item.src, item.title, item.extraClass || [], true, true, true, item.listenerAdder || defaultFunc);
-				document.body.appendChild(win);
+				demo_body.appendChild(win);
 				win.style.transform = `translate3d(${window.innerWidth/2-win.offsetWidth/2}px, ${window.innerHeight/2-win.offsetHeight/2}px, 0)`;
 			});
 			
@@ -1428,4 +1429,4 @@ window.addEventListener("keyup", e => {
 });
 
 window.addEventListener("mousemove", drag); // add main drag check
-document.body.addEventListener("mouseleave", e => {leaveAll(e); keys=[];}); // add out of bounds check
+demo_body.addEventListener("mouseleave", e => {leaveAll(e); keys=[];}); // add out of bounds check
