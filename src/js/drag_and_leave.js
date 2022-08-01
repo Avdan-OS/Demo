@@ -2,12 +2,8 @@
 var dragList = [];
 
 // mousedown event (add to dragList)
-const dragAdd = (e, currentTarget, target, currentTarget_in_f, target_in_f, currentTarget_f, target_f, currentTarget_out_f, target_out_f, drop_f, modify_X, modify_Y, extraX, extraY) => {
+const dragAdd = (e, currentTarget, target, currentTarget_in_f, target_in_f, currentTarget_f, target_f, currentTarget_out_f, target_out_f, drop_f, modify_X = true, modify_Y = true, extraX, extraY) => {
 	if (e.target == e.currentTarget) { // check if target
-
-		// check if disable X or Y moving
-		if (modify_X == undefined) modify_X = true
-		if (modify_Y == undefined) modify_Y = true
 
 		// generate info
 		var info = {
