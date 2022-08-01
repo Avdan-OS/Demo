@@ -1,5 +1,6 @@
 var demo_body = document.querySelector(".demo-body") || document.body;
 var z_index_g = 1; // global z-index counter
+var current_workspace = 1;
 
 // -- W I N D O W  C O N T R O L
 
@@ -450,7 +451,7 @@ const remakeWindow = (e, target, info) => {
 
 			// recreate window
 			var win = makeWindow(target_content_holder.firstChild || document.createElement("div"), icon_src, target.innerHTML);
-			demo_body.appendChild(win);
+			document.querySelector(`#workspace${current_workspace}`).appendChild(win);
 			win.style.top = window.innerHeight/2-win.offsetHeight/2+"px";
 			win.style.left = window.innerWidth/2-win.offsetWidth/2+"px";
 
@@ -1278,6 +1279,7 @@ var apps_list; // global app list for window functions
 const appBarGenerate = apps_list_l => { // local app list
 	// get app bar
 	var app_bar = document.querySelector(".app-bar");	
+	app_bar.innerHTML = '';
 
 	// rewrite global app list
 	apps_list = apps_list_l;
@@ -1324,7 +1326,7 @@ const appBarGenerate = apps_list_l => { // local app list
 				// create window
 				var defaultFunc = content => {};
 				var win = makeWindow(item.content, item.src, item.title, item.extraClass || [], true, true, true, item.listenerAdder || defaultFunc);
-				demo_body.appendChild(win);
+				document.querySelector(`#workspace${current_workspace}`).appendChild(win);
 				win.style.transform = `translate3d(${window.innerWidth/2-win.offsetWidth/2}px, ${window.innerHeight/2-win.offsetHeight/2}px, 0)`;
 			});
 			
@@ -1415,6 +1417,31 @@ const scrollBarGenerate = scroll_list_l => {
 	}
 }
 
+const setWorkspace = ws_num => {
+	document.querySelectorAll(".workspace").forEach(item => {
+		if (!item.style.display) {
+			if (item.children.length) {
+				item.style.display = "none";
+			}
+			else {
+				item.parentElement.removeChild(item);
+			}
+		}
+	});
+
+	current_workspace = ws_num;
+	var workspace = document.querySelector(`#workspace${ws_num}`);
+	if (!workspace) {
+		workspace = document.createElement("div");
+		workspace.classList.add("workspace");
+		workspace.id = `workspace${ws_num}`;
+		demo_body.insertBefore(workspace, demo_body.firstChild);
+	}
+	else {
+		workspace.style.display = null;
+	}
+}
+
 var keys =[];
 window.addEventListener("keydown", e => {
 	keys.push(e.keyCode);
@@ -1428,5 +1455,6 @@ window.addEventListener("keyup", e => {
 	}
 });
 
+setWorkspace(current_workspace);
 window.addEventListener("mousemove", drag); // add main drag check
 demo_body.addEventListener("mouseleave", e => {leaveAll(e); keys=[];}); // add out of bounds check
