@@ -55,7 +55,7 @@ var files_open_list_items = [
 				"label" : "Downloads"
 			},
 			{
-				"src" : "src/images/demo/icons/Files/Aplications.png",
+				"src" : "src/images/demo/icons/Files/Applications.png",
 				"label" : "Applications"
 			},
 			{
@@ -206,17 +206,17 @@ files_closed_items = [
 		"title" : "Recently Opened", // section title
 		"items" : [
 			{
-				"src" : "src/images/demo/icons/Files/Documents.png", // item icon
+				"src" : "src/images/demo/icons/Files/XLSX.png", // item icon
 				"label" : "2022 Monthly Expenses", // item label
 				"date" : "5m ago" // last opened date
 			},
 			{
-				"src" : "src/images/demo/icons/Files/Downloads.png",
+				"src" : "src/images/demo/icons/Files/DOCX.png",
 				"label" : "Instructions",
 				"date" : "1h ago"
 			},
 			{
-				"src" : "src/images/demo/icons/Files/Documents.png",
+				"src" : "src/images/demo/icons/Files/PDF.png",
 				"label" : "Rental Agreement",
 				"date" : "2h ago"
 			}
@@ -226,11 +226,11 @@ files_closed_items = [
 		"title" : "Recommended",
 		"items" : [
 			{
-				"src" : "src/images/demo/icons/Files/Documents.png",
+				"src" : "src/images/demo/icons/Files/AEP.png",
 				"label" : "Introduction Video.aep",
 			},
 			{
-				"src" : "src/images/demo/icons/Files/Documents.png",
+				"src" : "src/images/demo/icons/Files/PSD.png",
 				"label" : "Brand Guidelines.psd",
 			},
 			{
