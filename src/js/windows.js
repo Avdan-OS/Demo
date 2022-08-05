@@ -389,37 +389,35 @@ const remakeWindow = (e, target, info) => {
 
 		// check all windows
 		document.querySelectorAll(".window").forEach(item => {
-			if (win != item) {
-				// get translate
-				var targetTransformX = 0;
-				var targetTransformY = 0;
-				if (item.style.transform != '') {
+			// get translate
+			var targetTransformX = 0;
+			var targetTransformY = 0;
+			if (item.style.transform != '') {
+			
+				var nums = item.style.transform.split("translate3d")[1];
+				nums = nums.slice(1, nums.length-1).split("px,");
 				
-					var nums = item.style.transform.split("translate3d")[1];
-					nums = nums.slice(1, nums.length-1).split("px,");
-					
-					targetTransformX = parseInt(nums[0]);
-					targetTransformY = parseInt(nums[1]);
+				targetTransformX = parseInt(nums[0]);
+				targetTransformY = parseInt(nums[1]);
+			}
+
+			// get coords (rewrite current window coords)
+			x1 = item.offsetLeft+targetTransformX;
+			x2 = x1+item.offsetWidth;
+			y1 = item.offsetTop+targetTransformY;
+			y2 = y1+item.offsetHeight;
+
+			if (x1, x2, y1, y2, x1 <= e.clientX && e.clientX <= x2 && y1 <= e.clientY && e.clientY <= y2) { // if over a window
+				if (highestWin == "") { 
+					highestWin = item;
 				}
-
-				// get coords (rewrite current window coords)
-				x1 = item.offsetLeft+targetTransformX;
-				x2 = x1+item.offsetWidth;
-				y1 = item.offsetTop+targetTransformY;
-				y2 = y1+item.offsetHeight;
-
-				if (x1, x2, y1, y2, x1 <= e.clientX && e.clientX <= x2 && y1 <= e.clientY && e.clientY <= y2) { // if over a window
-					if (highestWin == "") { 
-						highestWin = item;
-					}
-					else {
-						highestWin = (highestWin.style.zIndex > item.style.zIndex) && highestWin || item; // if bigger z-index then rewrite
-					}
+				else {
+					highestWin = (highestWin.style.zIndex > item.style.zIndex) && highestWin || item; // if bigger z-index then rewrite
 				}
 			}
 		});
 
-		if (!highestWin) { // if default left (no window under cursor)
+		if (!highestWin || highestWin == win) { // if default left (no window under cursor)
 
 			// find icon match in appbar
 			document.querySelectorAll(".img-container").forEach(item => {
