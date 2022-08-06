@@ -1312,6 +1312,7 @@ class Window {
 
 class Appbar {
 	static #list = []; // global app list for window functions
+	static #app_bar = ".app-bar";
 
 	static get = () => {
 		return Appbar.#list;
@@ -1319,7 +1320,7 @@ class Appbar {
 
 	static add = list_l => { // local app list
 		// get app bar
-		var app_bar = document.querySelector(".app-bar");	
+		var app_bar = document.querySelector(Appbar.#app_bar);	
 		app_bar.innerHTML = '';
 
 		// rewrite global app list
@@ -1517,7 +1518,7 @@ class Workspace {
 class Keylogger {
 	static #keys = [];
 
-	static listen = () => {
+	static {
 		window.addEventListener("keydown", e => {
 			Keylogger.append(e.keyCode);
 		});
@@ -1535,8 +1536,6 @@ class Keylogger {
 				}
 			}
 		});
-
-		return this;
 	}
 
 	static get = () => {
@@ -1561,7 +1560,6 @@ class Keylogger {
 }
 
 Workspace.set(Workspace.get());
-Keylogger.listen();
 
 window.addEventListener("mousemove", DragAndDrop.listen); // add main drag check
 demo_body.addEventListener("mouseleave", e => {
