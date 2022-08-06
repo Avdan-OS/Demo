@@ -120,7 +120,7 @@ settings_content.classList.add("noselect");
 // -- //
 
 // -- A P P B A R  C O N F I G S
-var apps_list_g = [
+var apps_list = [
 	{
 		"title" : "Files", // window title
 		"src" : "src/images/demo/icons/Apps/Files.png", // appbar/window icon
@@ -175,12 +175,12 @@ var apps_list_g = [
 ]
 
 // add apps to the appbar
-appBarGenerate(apps_list_g);
+Appbar.add(apps_list);
 // -- //
 
 // -- S C R O L L  B A R  C O N F I G S
 
-var scroll_list_g = { 
+var scroll_list = { 
 	"pos" : 0,
 	"items" : [
 		weather_time,
@@ -188,57 +188,35 @@ var scroll_list_g = {
 	]
 }
 
-scrollBarGenerate(scroll_list_g);
+Scrollbar.add(scroll_list);
 // -- //
 
 var app_bar = document.querySelector(".app-bar");
-app_bar.addEventListener("mousedown", e => {dragAdd(e, ".app-bar", ".app-bar", barDropTransition, undefined, swapBar, undefined, insertBar)});
-window.addEventListener("mouseup", e => {leave(e, ".app-bar")});
+app_bar.addEventListener("mousedown", e => {DragAndDrop.add(e, ".app-bar", ".app-bar", barDropTransition, undefined, swapBar, undefined, insertBar)});
+window.addEventListener("mouseup", e => {DragAndDrop.drop(e, ".app-bar")});
 
 var menu_bar = document.querySelector(".menu-bar");
-menu_bar.addEventListener("mousedown", e => {dragAdd(e, ".menu-bar", ".menu-bar", barDropTransition, undefined, swapBar, undefined, insertBar)});
-window.addEventListener("mouseup", e => {leave(e, ".menu-bar")});
+menu_bar.addEventListener("mousedown", e => {DragAndDrop.add(e, ".menu-bar", ".menu-bar", barDropTransition, undefined, swapBar, undefined, insertBar)});
+window.addEventListener("mouseup", e => {DragAndDrop.drop(e, ".menu-bar")});
 
 var scroll_bar = document.querySelector(".scroll-bar");
-scroll_bar.addEventListener("mousedown", e => {dragAdd(e, ".scroll-bar", ".scroll-bar", barDropTransition, undefined, swapBar, undefined, insertBar)});
-window.addEventListener("mouseup", e => {leave(e, ".scroll-bar")});
+scroll_bar.addEventListener("mousedown", e => {DragAndDrop.add(e, ".scroll-bar", ".scroll-bar", barDropTransition, undefined, swapBar, undefined, insertBar)});
+window.addEventListener("mouseup", e => {DragAndDrop.drop(e, ".scroll-bar")});
 
 var info_bar = document.querySelector(".info-bar");
-info_bar.addEventListener("mousedown", e => {dragAdd(e, ".info-bar", ".info-bar", barDropTransition, undefined, swapBar, undefined, insertBar)});
-window.addEventListener("mouseup", e => {leave(e, ".info-bar")});
-/*
-// -- S E T T I N G S -- //
+info_bar.addEventListener("mousedown", e => {DragAndDrop.add(e, ".info-bar", ".info-bar", barDropTransition, undefined, swapBar, undefined, insertBar)});
+window.addEventListener("mouseup", e => {DragAndDrop.drop(e, ".info-bar")});
 
-var menu_content = document.createElement("div");
-menu_content.classList.add("menu-content");
-
-// -- M A I N  T I T L E
-var menu_title = document.createElement("div");
-menu_title.classList.add("menu-title");
-menu_title.innerHTML = "Menu";
-menu_content.appendChild(menu_title);
-
-var menu_main = document.createElement("div");
-menu_main.classList.add("menu-main");
-
-var menu_placeholder = document.createElement("div");
-menu_placeholder.classList.add("menu-placeholder");
-menu_placeholder.innerHTML = "There is no content here for now...";
-menu_main.appendChild(menu_placeholder);
-
-menu_content.appendChild(menu_main);
-// -- //
-*/
 var menuLaunched = false;
 document.querySelector("#avdan-menu").addEventListener("click", e => {
 	if (menuLaunched) {
 		var menu = document.querySelector(".avdan-menu");
-		closeWindow(e, menu);
+		Window.close(e, menu);
 		menuLaunched = false;
 	}
 	else {
-		var menu = makeWindow(menu_content, undefined, "Menu", ["avdan-menu"], false, false, false);
-		document.querySelector(`#workspace${current_workspace}`).appendChild(menu);
+		var menu = Window.make(menu_content, undefined, "Menu", ["avdan-menu"], false, false, false);
+		Workspace.add(menu);
 		menu.style.transform = `translate3d(${window.innerWidth/2-menu.offsetWidth/2}px, ${(window.innerHeight-document.querySelector('.dock').offsetHeight)-(menu.offsetHeight+16)}px, 0)`;
 		menuLaunched = true;
 	}
