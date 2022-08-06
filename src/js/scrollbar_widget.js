@@ -50,19 +50,11 @@ weather_time.appendChild(weather_panel);
 var duration_bar_holder = document.createElement("div");
 duration_bar_holder.classList.add("duration-bar-holder");
 duration_bar_holder.addEventListener("click", e => {
-	changeCurrentAudioTime(e);
+	Player.setTime(e);
 });
 
 var duration_bar = document.createElement("div");
 duration_bar.classList.add("duration-bar");
-
-audio.addEventListener("play", e => {
-	playAudio();
-});
-
-audio.addEventListener("pause", e => {
-	pauseAudio();
-});
 
 var player_holder = document.createElement("div");
 player_holder.classList.add("player-holder");
@@ -75,7 +67,7 @@ var player_icon = document.createElement("div");
 player_icon.classList.add("player-icon");
 
 var player_icon_img = document.createElement("img");
-player_icon_img.src = audios[currentAudioIndex].src;
+player_icon_img.src = Player.getList()[Player.getIndex()].src;
 player_icon.appendChild(player_icon_img);
 
 var player_info = document.createElement("div");
@@ -83,11 +75,11 @@ player_info.classList.add("player-info");
 
 var player_title = document.createElement("div");
 player_title.classList.add("player-title");
-player_title.innerHTML = audios[currentAudioIndex].title;
+player_title.innerHTML = Player.getList()[Player.getIndex()].title;
 
 var plyer_artist = document.createElement("div");
 plyer_artist.classList.add("player-artist");
-plyer_artist.innerHTML = audios[currentAudioIndex].artist;
+plyer_artist.innerHTML = Player.getList()[Player.getIndex()].artist;
 
 player_info.appendChild(player_title);
 player_info.appendChild(plyer_artist);
@@ -101,7 +93,7 @@ player_prev.innerHTML = '<path d="M0 21v-15c 0 0-0.5-4 3-3l12 7.5c0 0 1.5 1.5 0 
 player_prev.style.transform = "rotate(180deg)";
 player_prev.style.fill = "#ffffff";
 player_prev.addEventListener("click", e => {
-	previousTrack();
+	Player.prev();
 });
 
 var player_pause = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -109,7 +101,7 @@ player_pause.setAttributeNS(null, "viewBox", "0 0 24 24");
 player_pause.innerHTML = '<path d="M3 22v-17c0 0-0.5-4 3-3l15 8.5c0 0 1.5 1.5 0 3l-15 8.5c 0 0-4 1-3-3z"></path>';
 player_pause.style.fill = "#ffffff";
 player_pause.addEventListener("click", e => {
-	playPauseAudio();
+	Player.toggle();
 });
 
 var player_next = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -117,7 +109,7 @@ player_next.setAttributeNS(null, "viewBox", "0 0 24 24");
 player_next.innerHTML = '<path d="M0 21v-15c 0 0-0.5-4 3-3l12 7.5c0 0 1.5 1.5 0 3l-12 7.5c0 0-4 1-3-3zm12-16c 0 0-2 0-1 2.268l5.888 3.732c0 0 1 1 0 2l-3.888 2.732c0 0-4.5 2.5-1 3.268l11-6c0 0 1-1 0-2 l-11-6z"></path>';
 player_next.style.fill = "#ffffff";
 player_next.addEventListener("click", e => {
-	nextTrack();
+	Player.next();
 });
 
 player_control.appendChild(player_prev);

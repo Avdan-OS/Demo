@@ -1,176 +1,66 @@
 // M A I N
 
-// -- T E S T S  ( P L A C E H O L D E R S )
+// P L A C E H O L D E R S
 
-// -- P H O T O S -- //
-
-var photos_content = document.createElement("div");
-photos_content.classList.add("photos-content");
-
-// -- M A I N  T I T L E
-var photos_title = document.createElement("div");
-photos_title.classList.add("photos-title");
-photos_title.innerHTML = "Photos";
-photos_content.appendChild(photos_title);
-
-var photos_main = document.createElement("div");
-photos_main.classList.add("photos-main");
-
-var photos_placeholder = document.createElement("div");
-photos_placeholder.classList.add("photos-placeholder");
-photos_placeholder.innerHTML = "There is no content here for now...";
-photos_main.appendChild(photos_placeholder);
-
-photos_content.appendChild(photos_main);
-// -- //
-
-// -- M A I L -- //
-
-var mail_content = document.createElement("div");
-mail_content.classList.add("mail-content");
-
-// -- M A I N  T I T L E
-var mail_title = document.createElement("div");
-mail_title.classList.add("mail-title");
-mail_title.innerHTML = "Mail";
-mail_content.appendChild(mail_title);
-
-var mail_main = document.createElement("div");
-mail_main.classList.add("mail-main");
-
-var mail_placeholder = document.createElement("div");
-mail_placeholder.classList.add("mail-placeholder");
-mail_placeholder.innerHTML = "There is no content here for now...";
-mail_main.appendChild(mail_placeholder);
-
-mail_content.appendChild(mail_main);
-// -- //
-
-// -- C A L E N D A R -- //
-
-var calendar_content = document.createElement("div");
-calendar_content.classList.add("calendar-content");
-
-// -- M A I N  T I T L E
-var calendar_title = document.createElement("div");
-calendar_title.classList.add("calendar-title");
-calendar_title.innerHTML = "Calendar";
-calendar_content.appendChild(calendar_title);
-
-var calendar_main = document.createElement("div");
-calendar_main.classList.add("calendar-main");
-
-var calendar_placeholder = document.createElement("div");
-calendar_placeholder.classList.add("calendar-placeholder");
-calendar_placeholder.innerHTML = "There is no content here for now...";
-calendar_main.appendChild(calendar_placeholder);
-
-calendar_content.appendChild(calendar_main);
-// -- //
-
-// -- N O T E S -- //
-
-var notes_content = document.createElement("div");
-notes_content.classList.add("notes-content");
-
-// -- M A I N  T I T L E
-var notes_title = document.createElement("div");
-notes_title.classList.add("notes-title");
-notes_title.innerHTML = "Notes";
-notes_content.appendChild(notes_title);
-
-var notes_main = document.createElement("div");
-notes_main.classList.add("notes-main");
-
-var notes_placeholder = document.createElement("div");
-notes_placeholder.classList.add("notes-placeholder");
-notes_placeholder.innerHTML = "There is no content here for now...";
-notes_main.appendChild(notes_placeholder);
-
-notes_content.appendChild(notes_main);
-// -- //
-
-// -- S E T T I N G S -- //
-
-var settings_content = document.createElement("div");
-settings_content.classList.add("settings-content");
-
-// -- M A I N  T I T L E
-var settings_title = document.createElement("div");
-settings_title.classList.add("settings-title");
-settings_title.innerHTML = "Settings";
-settings_content.appendChild(settings_title);
-
-var settings_main = document.createElement("div");
-settings_main.classList.add("settings-main");
-
-var settings_placeholder = document.createElement("div");
-settings_placeholder.classList.add("settings-placeholder");
-settings_placeholder.innerHTML = "There is no content here for now...";
-settings_main.appendChild(settings_placeholder);
-
-settings_content.appendChild(settings_main);
-// -- //
-
-mail_content.classList.add("noselect");
-photos_content.classList.add("noselect");
-calendar_content.classList.add("noselect");
-notes_content.classList.add("noselect");
-settings_content.classList.add("noselect");
-// -- //
+var Mail = new Placeholder("Mail", "src/images/demo/icons/Apps/Mail.png");
+var Photos = new Placeholder("Photos", "src/images/demo/icons/Apps/Gallery.png");
+var Calendar = new Placeholder("Calendar", "src/images/demo/icons/Apps/Calendar.png");
+var Notes = new Placeholder("Notes", "src/images/demo/icons/Apps/Notes.png");
+var Settings = new Placeholder("Settings", "src/images/demo/icons/Apps/Settings.png");
 
 // -- A P P B A R  C O N F I G S
 var apps_list = [
 	{
-		"title" : "Files", // window title
-		"src" : "src/images/demo/icons/Apps/Files.png", // appbar/window icon
-		"content" : files_content, // content for the window
-		"extraClass" : ["file-manager"] // extra classes for window (optional)
+		"title" : Filemanager.title, // window title
+		"src" : Filemanager.src, // appbar/window icon
+		"content" : Filemanager.content, // content for the window
+		"extraClass" : Filemanager.extraClass // extra classes for window (optional)
 	},
 	{
-		"title" : "Mail",
-		"src" : "src/images/demo/icons/Apps/Mail.png",
-		"content" : mail_content
+		"title" : Mail.title,
+		"src" : Mail.src,
+		"content" : Mail.content
 	},
 	{
-		"title" : "Lale",
-		"src" : "src/images/demo/icons/Apps/Lale.png",
-		"content" : lale_content
+		"title" : Lale.title, 
+		"src" : Lale.src, 
+		"content" : Lale.content, 
 	},
 	{
-		"title" : "Photos",
-		"src" : "src/images/demo/icons/Apps/Gallery.png",
-		"content" : photos_content
+		"title" : Photos.title,
+		"src" : Photos.src,
+		"content" : Photos.content
 	},
 	{
-		"title" : "Calendar",
-		"src" : "src/images/demo/icons/Apps/Calendar.png",
-		"content" : calendar_content
+		"title" : Calendar.title,
+		"src" : Calendar.src,
+		"content" : Calendar.content
 	},
 	{
-		"title" : "Notes",
-		"src" : "src/images/demo/icons/Apps/Notes.png",
-		"content" : notes_content
+		"title" : Notes.title,
+		"src" : Notes.src,
+		"content" : Notes.content
 	},
 	{
 		"content" : "hr"
 	},
 	{
-		"title" : "Settings",
-		"src" : "src/images/demo/icons/Apps/Settings.png",
-		"content" : settings_content
+		"title" : Settings.title,
+		"src" : Settings.src,
+		"content" : Settings.content
 	},
 	{
-		"title" : "Music",
-		"src" : "src/images/demo/icons/Apps/Music.png",
-		"content" : music_content,
-		"listenerAdder" : musicListeners
+		"title" : Music.title,
+		"src" : Music.src,
+		"content" : Music.content,
+		"listenerAdder" : Music.listener
 	},
 	{
-		"title" : "Messages",
-		"src" : "src/images/demo/icons/Apps/Messages.png",
-		"content" : messages_content,
-		"listenerAdder" : messageListeners
+		"title" : Messages.title, 
+		"src" : Messages.src, 
+		"content" : Messages.content, 
+		"listenerAdder" : Messages.listener, 
+		"extraClass" : Messages.extraClass 
 	},
 ]
 
@@ -207,18 +97,17 @@ var info_bar = document.querySelector(".info-bar");
 info_bar.addEventListener("mousedown", e => {DragAndDrop.add(e, ".info-bar", ".info-bar", barDropTransition, undefined, swapBar, undefined, insertBar)});
 window.addEventListener("mouseup", e => {DragAndDrop.drop(e, ".info-bar")});
 
-var menuLaunched = false;
 document.querySelector("#avdan-menu").addEventListener("click", e => {
-	if (menuLaunched) {
+	if (Menu.launched) {
 		var menu = document.querySelector(".avdan-menu");
 		Window.close(e, menu);
-		menuLaunched = false;
+		Menu.launched = false;
 	}
 	else {
-		var menu = Window.make(menu_content, undefined, "Menu", ["avdan-menu"], false, false, false);
+		var menu = Window.make(Menu.content, Menu.src, Menu.title, Menu.extraClass, false, false, false);
 		Workspace.add(menu);
 		menu.style.transform = `translate3d(${window.innerWidth/2-menu.offsetWidth/2}px, ${(window.innerHeight-document.querySelector('.dock').offsetHeight)-(menu.offsetHeight+16)}px, 0)`;
-		menuLaunched = true;
+		Menu.launched = true;
 	}
 });
 

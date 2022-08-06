@@ -1052,14 +1052,20 @@ class Window {
 	}
 
 	static close = (e, win) => {
-		win.parentElement.removeChild(win);
-		var underline = document.querySelector(`#underline${win.id.match("[0-9]+")}`);
-		
-		if (underline) {
-			underline.parentElement.removeChild(underline);
-		}
+		if (win.classList.contains("window") || win.classList.contains("static-window")) {
+			win.parentElement.removeChild(win);
+			var underline = document.querySelector(`#underline${win.id.match("[0-9]+")}`);
+			
+			if (underline) {
+				underline.parentElement.removeChild(underline);
+			}
 
-		return this;
+			return this;
+		}
+		else {
+			console.error("Window.close: not a window");
+			return 1;
+		}
 	}
 
 
