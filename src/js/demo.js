@@ -65,7 +65,7 @@ var apps_list = [
 ]
 
 // add apps to the appbar
-Appbar.add(apps_list);
+Appbar.set(apps_list);
 // -- //
 
 // -- S C R O L L  B A R  C O N F I G S
@@ -78,7 +78,7 @@ var scroll_list = {
 	]
 }
 
-Scrollbar.add(scroll_list);
+Scrollbar.set(scroll_list);
 // -- //
 
 var app_bar = document.querySelector(".app-bar");

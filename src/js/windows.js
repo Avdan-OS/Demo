@@ -1318,7 +1318,7 @@ class Appbar {
 		return Appbar.#list;
 	}
 
-	static add = list_l => { // local app list
+	static set = list_l => { // local app list
 		// get app bar
 		var app_bar = document.querySelector(Appbar.#app_bar);	
 		app_bar.innerHTML = '';
@@ -1441,7 +1441,7 @@ class Scrollbar {
 		return Scrollbar.#list;
 	}
 
-	static add = list_l => {
+	static set = list_l => {
 		Scrollbar.#list = list_l;
 		var scroll_bar = document.querySelector(".scroll-bar");
 		var oldChild = scroll_bar.querySelector(".scroll-item");
@@ -1464,7 +1464,7 @@ class Scrollbar {
 					else {
 						Scrollbar.#list.pos -= parseInt((Scrollbar.#list.pos <= 0) && `${-1*Scrollbar.#list.items.length+1}` || "1");
 					}
-					Scrollbar.add(Scrollbar.#list);
+					Scrollbar.set(Scrollbar.#list);
 				}
 			});
 			scroll_bar.hasScroll = true;
