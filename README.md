@@ -12,7 +12,7 @@ Inspired by __Dynamic Code__ and __FacuA0__
 
 # Preview
 
-Demo preview is [here](https://avdanos.github.io/Demo)
+Demo preview is [here](https://avdan-os.github.io/Demo)
 
 # Documentation 
 It's on the official AvdanOS webisite [here](https://docs.avdanos.com/demo/demo-intro)
