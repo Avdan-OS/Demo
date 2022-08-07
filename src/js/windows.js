@@ -910,7 +910,7 @@ const newTab = (e, target) => {
 	new_icon_block.id = `icon-block${Window.get()}`;
 
 	new_tab.addEventListener("click", e => {
-		if (Keylogger.get().includes(17)) {
+		if (Keylogger.getKeys().includes(17)) {
 			DragAndDrop.click(e, `#${new_content_holder.id}`, undefined, showContent)
 		}
 		else {
@@ -1007,7 +1007,7 @@ const newTab = (e, target) => {
 	new_tab_content.appendChild(apps_holder);
 	new_content_holder.appendChild(new_tab_content);
 
-	if (!Keylogger.get().includes(17)) {
+	if (!Keylogger.getKeys().includes(17)) {
 		hideAllContent(e, win);
 	}
 
@@ -1109,7 +1109,7 @@ class Window {
 			win_tab.id = "win-tab"+Window.#win_id;
 			win_tab.innerHTML = title;
 			win_tab.addEventListener("click", e => {
-				if (Keylogger.get().includes(17)) {
+				if (Keylogger.getKeys().includes(17)) {
 					DragAndDrop.click(e, `#${content_holder.id}`, undefined, showContent)
 				}
 				else {
@@ -1312,7 +1312,7 @@ class Window {
 
 class Appbar {
 	static #list = []; // global app list for window functions
-	static #app_bar = ".app-bar";
+	static app_bar = ".app-bar";
 
 	static get = () => {
 		return Appbar.#list;
@@ -1320,7 +1320,7 @@ class Appbar {
 
 	static set = list_l => { // local app list
 		// get app bar
-		var app_bar = document.querySelector(Appbar.#app_bar);	
+		var app_bar = document.querySelector(Appbar.app_bar);	
 		app_bar.innerHTML = '';
 
 		// rewrite global app list
@@ -1436,6 +1436,7 @@ class Appbar {
 
 class Scrollbar {
 	static #list = [];
+	static scroll_bar = ".scroll-bar";
 
 	static get = () => {
 		return Scrollbar.#list;
@@ -1443,7 +1444,7 @@ class Scrollbar {
 
 	static set = list_l => {
 		Scrollbar.#list = list_l;
-		var scroll_bar = document.querySelector(".scroll-bar");
+		var scroll_bar = document.querySelector(Scrollbar.scroll_bar);
 		var oldChild = scroll_bar.querySelector(".scroll-item");
 		var child = list_l.items[list_l.pos];
 		child.classList.add("scroll-item");
@@ -1457,7 +1458,7 @@ class Scrollbar {
 		
 		if (!scroll_bar.hasScroll) {
 			scroll_bar.addEventListener("wheel", e => {
-				if (Keylogger.get().includes(16)) {
+				if (Keylogger.getKeys().includes(16)) {
 					if (e.deltaY > 0) {
 						Scrollbar.#list.pos += parseInt((Scrollbar.#list.pos >= Scrollbar.#list.items.length-1) && `${-1*Scrollbar.#list.items.length+1}` || "1");
 					}
@@ -1480,7 +1481,7 @@ class Workspace {
 		return Workspace.#current_ws;
 	}
 
-	static add = (win) => {
+	static add = win => {
 		document.querySelector(`#workspace${Workspace.#current_ws}`).appendChild(win);
 		return this;
 	}
@@ -1513,33 +1514,87 @@ class Workspace {
 		
 		return this;
 	}
+
+	static {
+		Workspace.set(Workspace.get());
+	}
 }
 
 class Keylogger {
 	static #keys = [];
+	static #list = [];
+	static showKeys = false;
 
 	static {
 		window.addEventListener("keydown", e => {
+			if (Keylogger.showKeys) {
+				console.log(e);
+			}
 			Keylogger.append(e.keyCode);
 		});
 
 		window.addEventListener("keyup", e => {
-			var keys = Keylogger.get();
+			var keys = Keylogger.getKeys();
+			var list = Keylogger.getList();
 			var i = 0;
 
+			if (Keylogger.showKeys) {
+				console.log(e);
+			}
 			while (i < keys.length) {
 				if (e.keyCode == keys[i]) {
-					keys = Keylogger.remove(i).get();
+					keys = Keylogger.remove(i).getKeys();
 				}
 				else {
 					i++;
 				}
 			}
+			list.forEach(item => {
+				if (item.keyCode == e.keyCode) {
+					item.func(e, item);
+				}
+			});
 		});
 	}
 
-	static get = () => {
+	static press = (keyCode, func) => {
+		var info = {
+			"keyCode" : keyCode,
+			"func" : func
+		}
+		Keylogger.#list.push(info);
+		return Keylogger;
+	}
+
+	static unpress = (keyCode, func) => {
+		var i = 0;
+		while (i < Keylogger.#list.length) {
+			if (typeof func != "function") {
+				if (Keylogger.#list[i].keyCode == keyCode) {
+					var removed = Keylogger.#list.splice(i, 1)[0]
+				}
+				else {
+					i++;
+				}
+			}
+			else {
+				if (Keylogger.#list[i].keyCode == keyCode && Keylogger.#list[i].func == func) {
+					var removed = Keylogger.#list.splice(i, 1)[0]
+				}
+				else {
+					i++;
+				}
+			}
+		}
+		return this;
+	}
+
+	static getKeys = () => {
 		return Keylogger.#keys;
+	}
+
+	static getList = () => {
+		return Keylogger.#list;
 	}
 
 	static append = (keyCode) => {
@@ -1558,8 +1613,6 @@ class Keylogger {
 		return this;
 	}
 }
-
-Workspace.set(Workspace.get());
 
 window.addEventListener("mousemove", DragAndDrop.listen); // add main drag check
 demo_body.addEventListener("mouseleave", e => {

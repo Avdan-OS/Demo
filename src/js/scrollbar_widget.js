@@ -50,7 +50,7 @@ weather_time.appendChild(weather_panel);
 var duration_bar_holder = document.createElement("div");
 duration_bar_holder.classList.add("duration-bar-holder");
 duration_bar_holder.addEventListener("click", e => {
-	Player.setTime(e);
+	Player.setTime((e.offsetX/e.currentTarget.offsetWidth)*Player.getDuration());
 });
 
 var duration_bar = document.createElement("div");

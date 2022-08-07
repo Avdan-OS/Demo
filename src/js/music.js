@@ -148,13 +148,25 @@ class Player {
 		return this;
 	}
 
-	static setTime = (e) => {
-		Player.#audio.currentTime = (e.offsetX/e.currentTarget.offsetWidth)*Player.#audio.duration;
+	static setTime = time => {
+		if (0 <= time && time < Player.#audio.duration) {
+			Player.#audio.currentTime = time;
+		}
+		else {
+			console.error(`Player.setTime: ${time} out of range`);
+			return 1;
+		}
 		return this;
 	}
 
 	static setIndex = (pos) => {
-		Player.#pos = pos;
+		if (0 <= pos && pos < Player.#list.length) {
+			Player.#pos = pos;
+		}
+		else {
+			console.error("Player.setIndex: out of range");
+			return 1;
+		}
 		return this;
 	}
 
@@ -488,7 +500,7 @@ class Music {
 		var duration_bar_holder = document.createElement("div");
 		duration_bar_holder.classList.add("music-bottom-side-duration-bar-holder");
 		duration_bar_holder.addEventListener("click", e => {
-			Player.setTime(e);
+			Player.setTime((e.offsetX/e.currentTarget.offsetWidth)*Player.getDuration());
 			duration_bar.style.width = `${(Player.getTime()/Player.getDuration())*100}%`;
 			document.querySelectorAll(".music-bottom-side-duration-bar").forEach(item => {
 				item.style.width = `${(Player.getTime()/Player.getDuration())*100}%`;
