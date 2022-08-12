@@ -44,6 +44,7 @@
 	animation-name : make-visible;
 	animation-duration : 5.7s;
 	background-color: var(--inner-first-color);
+	z-index: 8;
 }
 
 .intro-title {

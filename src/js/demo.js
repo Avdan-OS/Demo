@@ -97,7 +97,7 @@ var info_bar = document.querySelector(".info-bar");
 info_bar.addEventListener("mousedown", e => {DragAndDrop.add(e, ".info-bar", ".info-bar", barDropTransition, undefined, swapBar, undefined, insertBar)});
 window.addEventListener("mouseup", e => {DragAndDrop.drop(e, ".info-bar")});
 
-document.querySelector("#avdan-menu").addEventListener("click", e => {
+demo_body.querySelector("#avdan-menu").addEventListener("click", e => {
 	if (Menu.launched) {
 		var menu = document.querySelector(".avdan-menu");
 		Window.close(e, menu);
@@ -106,17 +106,24 @@ document.querySelector("#avdan-menu").addEventListener("click", e => {
 	else {
 		var menu = Window.make(Menu.content, Menu.src, Menu.title, Menu.extraClass, false, false, false);
 		Workspace.add(menu);
-		menu.style.transform = `translate3d(${window.innerWidth/2-menu.offsetWidth/2}px, ${(window.innerHeight-document.querySelector('.dock').offsetHeight)-(menu.offsetHeight+16)}px, 0)`;
+		menu.style.transform = `translate3d(${demo_body.offsetWidth/2-menu.offsetWidth/2}px, ${(demo_body.offsetHeight-document.querySelector('.dock').offsetHeight)-(menu.offsetHeight+16)}px, 0)`;
 		Menu.launched = true;
 	}
 });
 
-window.addEventListener("resize", e => {
+demo_body.addEventListener("resize", e => {
 	var menu = document.querySelector(".avdan-menu");
 	if (menu) {
-		menu.style.transform = `translate3d(${window.innerWidth/2-menu.offsetWidth/2}px, ${(window.innerHeight-document.querySelector('.dock').offsetHeight)-(menu.offsetHeight+16)}px, 0)`;
+		menu.style.transform = `translate3d(${demo_body.offsetWidth/2-menu.offsetWidth/2}px, ${(demo_body.offsetHeight-document.querySelector('.dock').offsetHeight)-(menu.offsetHeight+16)}px, 0)`;
 	}
 });
+
+const fullscreen = e => {
+	e.currentTarget.requestFullscreen();
+	demo_body.removeEventListener("click", fullscreen);
+}
+
+demo_body.addEventListener("click", fullscreen);
 
 if (window.navigator.userAgent.match("Firefox")) {
 	var app_bar = document.querySelector(".app-bar");

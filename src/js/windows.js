@@ -1369,7 +1369,7 @@ class Appbar {
 					var defaultFunc = content => {};
 					var win = Window.make(item.content, item.src, item.title, item.extraClass || [], true, true, true, item.listenerAdder || defaultFunc);
 					Workspace.add(win);
-					win.style.transform = `translate3d(${window.innerWidth/2-win.offsetWidth/2}px, ${window.innerHeight/2-win.offsetHeight/2}px, 0)`;
+					win.style.transform = `translate3d(${demo_body.offsetWidth/2-win.offsetWidth/2}px, ${demo_body.offsetHeight/2-win.offsetHeight/2}px, 0)`;
 				});
 				
 				// create icon

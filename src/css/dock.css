@@ -116,7 +116,7 @@
 }
 
 .menu-bar svg linearGradient stop:nth-child(2) {
-	stop-color: var(--finish-color);;
+	stop-color: var(--finish-color);
 }
 
 .menu-bar svg path {
