@@ -18,10 +18,10 @@ setInterval(() => {
 var curr_date = document.createElement("div");
 curr_date.classList.add("curr-date");
 var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-curr_date.innerHTML = `${days[date.getDay()-1]}, ${date.toDateString().split(' ')[1]} ${date.getDate()}`;
+curr_date.innerHTML = `${days[(date.getDay()-1 < 0) && days.length-1 || date.getDay()-1]}, ${date.toDateString().split(' ')[1]} ${date.getDate()}`;
 setInterval(() => {
 	var date = new Date;
-	curr_date.innerHTML = `${days[date.getDay()-1]}, ${date.toDateString().split(' ')[1]} ${date.getDate()}`;
+	curr_date.innerHTML = `${days[(date.getDay()-1 < 0) && days.length-1 || date.getDay()-1]}, ${date.toDateString().split(' ')[1]} ${date.getDate()}`;
 }, 1000*60*60);
 
 var time_panel = document.createElement("div");

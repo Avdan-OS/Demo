@@ -227,11 +227,13 @@ const dragResizeWHRB = (e, target, info) => {
 
 // on drag start (tabs)
 const dropTransition = (e, target, info) => {
-	target.style.transition = "none";
 	var win = target;
 	while (!win.classList.contains("window")) {
 		win = win.parentElement;
 	}
+	win.querySelectorAll(".win-tab").forEach(item => {
+		item.style.transition = null;
+	});
 	win.style.zIndex = Layer.get();
 	Layer.inc();
 }
@@ -267,217 +269,272 @@ const swapTab = (e, target, info) => {
 	var icon_src = icon_block.querySelector("img").src; // get icon src
 
 	var panel = target.parentElement;
-	var insAfter = false;
+	var insAfter;
+	var last_pos;
+	var new_pos;
 
-	panel.querySelectorAll(".win-tab").forEach(item => {
+	var tabs = panel.querySelectorAll(".win-tab");
+	for (var i = 1; i < tabs.length; i++) {
+		var item = tabs[i];
 		if (item != target) {
-			if (item != panel.firstChild) {
-				var win_tab_x1 = x1 + panel.offsetLeft + item.offsetLeft
-				var win_tab_x2 = win_tab_x1 + item.offsetWidth;
-				var win_tab_y1 = y1 + panel.offsetTop + item.offsetTop;
-				var win_tab_y2 = win_tab_y1 + item.offsetHeight;
+			var win_tab_x1 = x1 + panel.offsetLeft + item.offsetLeft
+			var win_tab_x2 = win_tab_x1 + item.offsetWidth;
+			var win_tab_y1 = y1 + panel.offsetTop + item.offsetTop;
+			var win_tab_y2 = win_tab_y1 + item.offsetHeight;
 
-				if (win_tab_x1 <= e.clientX && e.clientX <= win_tab_x2 && win_tab_y1 <= e.clientY && e.clientY <= win_tab_y2) {
-
-					var item_id = item.id.match("[0-9]+")[0];
-					var item_content_holder = win.querySelector("#content-holder"+item_id);
-					var item_icon_block = win.querySelector("#icon-block"+item_id);
-					
-					targetTransformX = 0;
-					targetTransformY = 0;
-					if (win.style.transform != '') {
-					
-						var nums = target.style.transform.split("translate3d")[1];
-						nums = nums.slice(1, nums.length-1).split("px,");
-						
-						targetTransformX = parseInt(nums[0]);
-						targetTransformY = parseInt(nums[1]);
-					}
-
-					if (insAfter) {
-						item_content_holder.parentElement.insertBefore(target_content_holder, item_content_holder.nextSibling);
-						item_icon_block.parentElement.insertBefore(icon_block, item_icon_block.nextSibling);
-
-						var offsetBefore = target.offsetLeft;
-						panel.insertBefore(target, item.nextSibling);
-						var offsetAfter = target.offsetLeft;
-					}
-					else {
-						item_content_holder.parentElement.insertBefore(target_content_holder, item_content_holder);
-						item_icon_block.parentElement.insertBefore(icon_block, item_icon_block);
-
-						var offsetBefore = target.offsetLeft;
-						panel.insertBefore(target, item);
-						var offsetAfter = target.offsetLeft;
-					}
-
-					target.style.transform = `translate3d(${targetTransformX+(offsetBefore-offsetAfter)}px,${targetTransformY}px,0px)`;
-					return
+			if (win_tab_x1 <= e.clientX && e.clientX <= win_tab_x2 && win_tab_y1 <= e.clientY && e.clientY <= win_tab_y2) {
+				new_pos = i;
+				if (!insAfter) {
+					insAfter = false;
 				}
+
+				var item_id = item.id.match("[0-9]+")[0];
+				var item_content_holder = win.querySelector("#content-holder"+item_id);
+				var item_icon_block = win.querySelector("#icon-block"+item_id);
 			}
 		}
 		else {
-			insAfter = true;
+			last_pos = i;
+			if (insAfter != false) {
+				insAfter = true;
+			}
 		}
-	});
-}
-
-// on tab in/out drop
-const remakeWindow = (e, target, info) => {
-
-	// get current window
-	var win = target;
-	while (!win.classList.contains("window")) {
-		win = win.parentElement;
 	}
 
-	// get current window translate
-	var targetTransformX = 0;
-	var targetTransformY = 0;
-	if (win.style.transform != '') {
-	
-		var nums = win.style.transform.split("translate3d")[1];
-		nums = nums.slice(1, nums.length-1).split("px,");
-		
-		targetTransformX = parseInt(nums[0]);
-		targetTransformY = parseInt(nums[1]);
-	}
+	if (new_pos) {
+		if (insAfter) {
 
-	// get current window X Y
-	var x1 = win.offsetLeft+targetTransformX;
-	var x2 = x1+win.offsetWidth;
-	var y1 = win.offsetTop+targetTransformY;
-	var y2 = y1+win.offsetHeight;
+			for (var i = last_pos+1; i < new_pos+1; i++) {
+				var item = tabs[i];
+				item.style.transform = `translate3d(${target.offsetWidth+8}px,0px,0px)`;
+				item.style.transition = null;
+			}
 
-	// get  items to (move tab)/(recreate window)
-	var id_num = target.id.match("[0-9]+"); // get id to catch element from window
-	var target_content_holder = win.querySelector("#content-holder"+id_num); // catch content
-	var icon_block = win.querySelector("#icon-block"+id_num); // catch icon
-	var icon_src = icon_block.querySelector("img").src; // get icon src
-
-	if (x1, x2, y1, y2, x1 <= e.clientX && e.clientX <= x2 && y1 <= e.clientY && e.clientY <= y2) { // check if over current window
-		var container = win.querySelector(".container");
-
-		// get current window container coords
-		var container_x1 = x1 + container.offsetLeft;
-		var container_x2 = container_x1 + container.offsetWidth;
-		var container_y1 = y1 + container.offsetTop;
-		var container_y2 = container_y1 + container.offsetHeight;
-		
-		if (container_x1 <= e.clientX && e.clientX <= container_x2 && container_y1 <= e.clientY && e.clientY <= container_y2) { // if over container
-			win.querySelector("#content-holder"+id_num).style.display = null; // make visible
-		}
-		
-		// set transition and smooth return to topbar
-		target.style.transition = "background-color 0.1s ease-in-out, transform 0.1s ease-in-out";
-		target.style.transform = null;
-	}
-	else { // if out the current window
-		// get highest window by z-index
-		var highestWin = "";
-
-		// check all windows
-		document.querySelectorAll(".window").forEach(item => {
-			// get translate
-			var targetTransformX = 0;
-			var targetTransformY = 0;
-			if (item.style.transform != '') {
+			targetTransformX = 0;
+			targetTransformY = 0;
+			if (win.style.transform != '') {
 			
-				var nums = item.style.transform.split("translate3d")[1];
+				var nums = target.style.transform.split("translate3d")[1];
 				nums = nums.slice(1, nums.length-1).split("px,");
 				
 				targetTransformX = parseInt(nums[0]);
 				targetTransformY = parseInt(nums[1]);
 			}
 
-			// get coords (rewrite current window coords)
-			x1 = item.offsetLeft+targetTransformX;
-			x2 = x1+item.offsetWidth;
-			y1 = item.offsetTop+targetTransformY;
-			y2 = y1+item.offsetHeight;
+			item_content_holder.parentElement.insertBefore(target_content_holder, item_content_holder.nextSibling);
+			item_icon_block.parentElement.insertBefore(icon_block, item_icon_block.nextSibling);
 
-			if (x1, x2, y1, y2, x1 <= e.clientX && e.clientX <= x2 && y1 <= e.clientY && e.clientY <= y2) { // if over a window
-				if (highestWin == "") { 
-					highestWin = item;
-				}
-				else {
-					highestWin = (highestWin.style.zIndex > item.style.zIndex) && highestWin || item; // if bigger z-index then rewrite
-				}
-			}
-		});
-
-		if (!highestWin || highestWin == win) { // if default left (no window under cursor)
-
-			// find icon match in appbar
-			document.querySelectorAll(".img-container").forEach(item => {
-				if (icon_src == item.querySelector("img").src) { // if matches
-					// get selected underlines
-					var underlines = item.querySelector(".underlines");
-
-					// create new underline
-					var underline = document.createElement("div");
-					underline.classList.add("underline");
-					underline.id = `underline${Window.get()}`; // set new id
-
-					// add minimalize function
-					underline.addEventListener("click", e => {
-						var win = document.querySelector("#window"+e.currentTarget.id.match("[0-9]+")[0]); // catch new window (with new id)
-						if (win.style.display) {
-							e.currentTarget.style.backgroundColor = "var(--light-bg-hl)";
-							win.style.display = null;
-						}
-						else {
-							e.currentTarget.style.backgroundColor = "var(--light-bg)";
-							win.style.display = "none";
-						}
-					});
-
-					underlines.appendChild(underline); // add underline 
-				}
-			});
-
-			// recreate window
-			var win = Window.make(target_content_holder.firstChild || document.createElement("div"), icon_src, target.innerHTML);
-			Workspace.add(win);
-			win.style.top = window.innerHeight/2-win.offsetHeight/2+"px";
-			win.style.left = window.innerWidth/2-win.offsetWidth/2+"px";
-
-			var i = 1;
-			var content_holders = win.querySelectorAll(".content-holder");
-			content_holders.forEach(item => {
-				if (item.style.display) {i+=1}
-			});
-			if (i == content_holders.length) {
-				target_content_holder.previousSibling.style.display = null;
-			}
-
-			// erase elements from the current window 
-			target.parentElement.removeChild(target);
-			icon_block.parentElement.removeChild(icon_block);
-			target_content_holder.parentElement.removeChild(target_content_holder);
+			var offsetBefore = target.offsetLeft;
+			panel.insertBefore(target, tabs[new_pos].nextSibling);
+			var offsetAfter = target.offsetLeft;
+			var movement = offsetBefore-offsetAfter;
+			target.style.transform = `translate3d(${targetTransformX+movement}px,${targetTransformY}px,0px)`;
 		}
-		else { // if window under cursor
+		else {
 
-			// get selected window topbar
-			var winPanel = highestWin.querySelector(".win-panel");
+			for (var i = new_pos; i < last_pos; i++) {
+				var item = tabs[i];
+				item.style.transform = `translate3d(${-1*(target.offsetWidth+8)}px,0px,0px)`;
+				item.style.transition = null;
+			}
+
+			targetTransformX = 0;
+			targetTransformY = 0;
+			if (win.style.transform != '') {
 			
-			// get topbar coords
-			var panel_x1 = x1 + winPanel.offsetLeft;
-			var panel_x2 = panel_x1 + winPanel.offsetWidth;
-			var panel_y1 = y1 + winPanel.offsetTop;
-			var panel_y2 = panel_y1 + winPanel.offsetHeight;
+				var nums = target.style.transform.split("translate3d")[1];
+				nums = nums.slice(1, nums.length-1).split("px,");
+				
+				targetTransformX = parseInt(nums[0]);
+				targetTransformY = parseInt(nums[1]);
+			}
+
+			item_content_holder.parentElement.insertBefore(target_content_holder, item_content_holder);
+			item_icon_block.parentElement.insertBefore(icon_block, item_icon_block);
+
+			var offsetBefore = target.offsetLeft;
+			panel.insertBefore(target, tabs[new_pos]);
+			var offsetAfter = target.offsetLeft;
+			var movement = offsetBefore-offsetAfter;
+			target.style.transform = `translate3d(${targetTransformX+movement}px,${targetTransformY}px,0px)`;
+		}
+	}
+}
+
+const animateTab = (e, target, info) => {
+	var win = target;
+	while (!win.classList.contains("window")) {
+		win = win.parentElement;
+	}
+
+	var tabs = win.querySelectorAll(".win-tab");
+	for (var i = 1; i < tabs.length; i++) {
+		var item = tabs[i];
+		if (item != target) {
+			if (item.style.transform) {
+				item.style.transition = "transform 0.2s ease-in-out";
+				item.style.transform = null;
+			}
+		}
+	}
+}
+
+	// on tab in/out drop
+	const remakeWindow = (e, target, info) => {
+
+		// get current window
+		var win = target;
+		while (!win.classList.contains("window")) {
+			win = win.parentElement;
+		}
+
+		// get current window translate
+		var targetTransformX = 0;
+		var targetTransformY = 0;
+		if (win.style.transform != '') {
+		
+			var nums = win.style.transform.split("translate3d")[1];
+			nums = nums.slice(1, nums.length-1).split("px,");
 			
-			// delete target's transform
+			targetTransformX = parseInt(nums[0]);
+			targetTransformY = parseInt(nums[1]);
+		}
+
+		// get current window X Y
+		var x1 = win.offsetLeft+targetTransformX;
+		var x2 = x1+win.offsetWidth;
+		var y1 = win.offsetTop+targetTransformY;
+		var y2 = y1+win.offsetHeight;
+
+		// get  items to (move tab)/(recreate window)
+		var id_num = target.id.match("[0-9]+"); // get id to catch element from window
+		var target_content_holder = win.querySelector("#content-holder"+id_num); // catch content
+		var icon_block = win.querySelector("#icon-block"+id_num); // catch icon
+		var icon_src = icon_block.querySelector("img").src; // get icon src
+
+		if (x1, x2, y1, y2, x1 <= e.clientX && e.clientX <= x2 && y1 <= e.clientY && e.clientY <= y2) { // check if over current window
+			var container = win.querySelector(".container");
+
+			// get current window container coords
+			var container_x1 = x1 + container.offsetLeft;
+			var container_x2 = container_x1 + container.offsetWidth;
+			var container_y1 = y1 + container.offsetTop;
+			var container_y2 = container_y1 + container.offsetHeight;
+			
+			if (container_x1 <= e.clientX && e.clientX <= container_x2 && container_y1 <= e.clientY && e.clientY <= container_y2) { // if over container
+				win.querySelector("#content-holder"+id_num).style.display = null; // make visible
+			}
+			
+			// set transition and smooth return to topbar
+			target.style.transition = "background-color 0.1s ease-in-out, transform 0.1s ease-in-out";
 			target.style.transform = null;
+		}
+		else { // if out the current window
+			// get highest window by z-index
+			var highestWin = "";
 
-			// move tab to the new window
-			highestWin.querySelector(".tab-holder").insertBefore(target, highestWin.querySelector(".tab-add"));
+			// check all windows
+			document.querySelectorAll(".window").forEach(item => {
+				// get translate
+				var targetTransformX = 0;
+				var targetTransformY = 0;
+				if (item.style.transform != '') {
+				
+					var nums = item.style.transform.split("translate3d")[1];
+					nums = nums.slice(1, nums.length-1).split("px,");
+					
+					targetTransformX = parseInt(nums[0]);
+					targetTransformY = parseInt(nums[1]);
+				}
 
-			// if already has drag function (was once moved)
-			if (!target.hasDrag) {
-				target.hasDrag = true;
-				target.addEventListener("mousedown", e => {
-					DragAndDrop.DragAndDrop.add(e, `#${target.id}`, `#${target.id}`, undefined, dropTransition, undefined, swapTab, undefined, remakeWindow); // add this function to tab
+				// get coords (rewrite current window coords)
+				x1 = item.offsetLeft+targetTransformX;
+				x2 = x1+item.offsetWidth;
+				y1 = item.offsetTop+targetTransformY;
+				y2 = y1+item.offsetHeight;
+
+				if (x1, x2, y1, y2, x1 <= e.clientX && e.clientX <= x2 && y1 <= e.clientY && e.clientY <= y2) { // if over a window
+					if (highestWin == "") { 
+						highestWin = item;
+					}
+					else {
+						highestWin = (highestWin.style.zIndex > item.style.zIndex) && highestWin || item; // if bigger z-index then rewrite
+					}
+				}
+			});
+
+			if (!highestWin || highestWin == win) { // if default left (no window under cursor)
+
+				// find icon match in appbar
+				document.querySelectorAll(".img-container").forEach(item => {
+					if (icon_src == item.querySelector("img").src) { // if matches
+						// get selected underlines
+						var underlines = item.querySelector(".underlines");
+
+						// create new underline
+						var underline = document.createElement("div");
+						underline.classList.add("underline");
+						underline.id = `underline${Window.get()}`; // set new id
+
+						// add minimalize function
+						underline.addEventListener("click", e => {
+							var win = document.querySelector("#window"+e.currentTarget.id.match("[0-9]+")[0]); // catch new window (with new id)
+							if (win.style.display) {
+								e.currentTarget.style.backgroundColor = "var(--light-bg-hl)";
+								win.style.display = null;
+							}
+							else {
+								e.currentTarget.style.backgroundColor = "var(--light-bg)";
+								win.style.display = "none";
+							}
+						});
+
+						underlines.appendChild(underline); // add underline 
+					}
+				});
+
+				// recreate window
+				var win = Window.make(target_content_holder.firstChild || document.createElement("div"), icon_src, target.innerHTML);
+				Workspace.add(win);
+				win.style.top = window.innerHeight/2-win.offsetHeight/2+"px";
+				win.style.left = window.innerWidth/2-win.offsetWidth/2+"px";
+
+				var i = 1;
+				var content_holders = win.querySelectorAll(".content-holder");
+				content_holders.forEach(item => {
+					if (item.style.display) {i+=1}
+				});
+				if (i == content_holders.length) {
+					target_content_holder.previousSibling.style.display = null;
+				}
+
+				// erase elements from the current window 
+				target.parentElement.removeChild(target);
+				icon_block.parentElement.removeChild(icon_block);
+				target_content_holder.parentElement.removeChild(target_content_holder);
+			}
+			else { // if window under cursor
+
+				// get selected window topbar
+				var winPanel = highestWin.querySelector(".win-panel");
+				
+				// get topbar coords
+				var panel_x1 = x1 + winPanel.offsetLeft;
+				var panel_x2 = panel_x1 + winPanel.offsetWidth;
+				var panel_y1 = y1 + winPanel.offsetTop;
+				var panel_y2 = panel_y1 + winPanel.offsetHeight;
+				
+				// delete target's transform
+				target.style.transform = null;
+
+				// move tab to the new window
+				highestWin.querySelector(".tab-holder").insertBefore(target, highestWin.querySelector(".tab-add"));
+
+				// if already has drag function (was once moved)
+				if (!target.hasDrag) {
+					target.hasDrag = true;
+					target.addEventListener("mousedown", e => {
+						DragAndDrop.add(e, `#${target.id}`, `#${target.id}`, undefined, dropTransition, swapTab, animateTab, undefined, remakeWindow); // add this function to tab
 				});
 				window.addEventListener("mouseup", e => {DragAndDrop.drop(e, `#${target.id}`)}); // add global drop check for this tab
 				item.addEventListener("dblclick", e => {
@@ -760,7 +817,7 @@ const insertCheck = (e, target, info) => {
 			if (!item.hasDrag) {
 				item.hasDrag = true;
 				item.addEventListener("mousedown", e => {
-					DragAndDrop.add(e, `#${item.id}`, `#${item.id}`, undefined, dropTransition, undefined, swapTab, undefined, remakeWindow);
+					DragAndDrop.add(e, `#${item.id}`, `#${item.id}`, undefined, dropTransition, swapTab, animateTab, undefined, remakeWindow);
 				});
 				window.addEventListener("mouseup", e => {DragAndDrop.drop(e, `#${item.id}`)});
 				item.addEventListener("dblclick", e => {
@@ -955,7 +1012,7 @@ const newTab = (e, target) => {
 			app_holder.addEventListener("click", e => {
 				new_tab.innerHTML = item.title;
 				new_tab.addEventListener("mousedown", e => {
-					DragAndDrop.add(e, `#${new_tab.id}`, `#${new_tab.id}`, undefined, dropTransition, undefined, swapTab, undefined, remakeWindow);
+					DragAndDrop.add(e, `#${new_tab.id}`, `#${new_tab.id}`, undefined, dropTransition, swapTab, animateTab, undefined, remakeWindow);
 				});
 				window.addEventListener("mouseup", e => {DragAndDrop.drop(e, `#${new_tab.id}`)});
 
