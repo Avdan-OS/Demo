@@ -327,8 +327,7 @@ const swapTab = (e, target, info) => {
 			var offsetBefore = target.offsetLeft;
 			panel.insertBefore(target, tabs[new_pos].nextSibling);
 			var offsetAfter = target.offsetLeft;
-			var movement = offsetBefore-offsetAfter;
-			target.style.transform = `translate3d(${targetTransformX+movement}px,${targetTransformY}px,0px)`;
+			target.style.transform = `translate3d(${targetTransformX+(offsetBefore-offsetAfter)}px,${targetTransformY}px,0px)`;
 		}
 		else {
 
@@ -355,24 +354,18 @@ const swapTab = (e, target, info) => {
 			var offsetBefore = target.offsetLeft;
 			panel.insertBefore(target, tabs[new_pos]);
 			var offsetAfter = target.offsetLeft;
-			var movement = offsetBefore-offsetAfter;
-			target.style.transform = `translate3d(${targetTransformX+movement}px,${targetTransformY}px,0px)`;
+			target.style.transform = `translate3d(${targetTransformX+(offsetBefore-offsetAfter)}px,${targetTransformY}px,0px)`;
 		}
 	}
 }
 
 const animateTab = (e, target, info) => {
-	var win = target;
-	while (!win.classList.contains("window")) {
-		win = win.parentElement;
-	}
-
-	var tabs = win.querySelectorAll(".win-tab");
+	var tabs = target.parentElement.querySelectorAll(".win-tab");
 	for (var i = 1; i < tabs.length; i++) {
 		var item = tabs[i];
 		if (item != target) {
 			if (item.style.transform) {
-				item.style.transition = "transform 0.2s ease-in-out";
+				item.style.transition = "background-color 0.1s ease-in-out, color 0.1s ease-in-out, transform 0.2s ease-in-out";
 				item.style.transform = null;
 			}
 		}
@@ -880,10 +873,12 @@ const moveUpAndClean = (e, target, info) => {
 const iconDropTransition = (e, target, info) => {
 	target.style.transition = null;
 	target.style.zIndex = 2;
+	target.parentElement.style.zIndex = 2;
 }
 
 // drag icon func
 const moveIcon = (e, target, info) => {
+	var target = document.querySelector(info.target);
 
 	// get dock
 	var dock = document.querySelector(".dock");
@@ -892,10 +887,14 @@ const moveIcon = (e, target, info) => {
 	var icon_holder = document.querySelector(".app-bar");
 
 	// flag for position before or after current icon 
-	var insertAfter = false;
+	var insAfter;
+	var last_pos;
+	var new_pos;
 
 	// get all icons
-	document.querySelectorAll(".img-container, .app-split").forEach(item => {
+	var icons = document.querySelectorAll(".img-container, .app-split");
+	for (var i = 0; i < icons.length; i++) {
+		var item = icons[i];
 		if (target != item) { // if not current icon
 
 			// get positions
@@ -907,42 +906,90 @@ const moveIcon = (e, target, info) => {
 			// check if over
 			if (x1, x2, y1, y2, x1 <= e.clientX && e.clientX <= x2 && y1 <= e.clientY && e.clientY <= y2) {
 
-				var targetTransformX = 0;
-				var targetTransformY = 0;
-				if (target.style.transform != '') {
-				
-					var nums = target.style.transform.split("translate3d")[1];
-					nums = nums.slice(1, nums.length-1).split("px,");
-					
-					targetTransformX = parseInt(nums[0]);
-					targetTransformY = parseInt(nums[1]);
+				new_pos = i;
+				if (!insAfter) {
+					insAfter = false;
 				}
-
-				var offsetBefore = target.offsetLeft;
-				// check flag
-				if (insertAfter) {
-					item.parentElement.insertBefore(target, item.nextSibling);
-				}
-				else {
-					item.parentElement.insertBefore(target, item);
-				}
-				var offsetAfter = target.offsetLeft;
-
-				target.style.transform = `translate3d(${targetTransformX+(offsetBefore-offsetAfter)}px,${targetTransformY}px,0px)`;
-
-				return
 			}
 		}
 		else { // toggle flag if current
-			insertAfter = true;
+			last_pos = i;
+			if (insAfter != false) {
+				insAfter = true;
+			}
 		}
-	});
+	}
+
+	if (typeof new_pos == "number") {
+		if (insAfter) {
+
+			for (var i = last_pos+1; i < new_pos+1; i++) {
+				var item = icons[i];
+				item.style.transform = `translate3d(${target.offsetWidth+8}px,0px,0px)`;
+				item.style.transition = null;
+			}
+
+			var targetTransformX = 0;
+			var targetTransformY = 0;
+			if (target.style.transform != '') {
+			
+				var nums = target.style.transform.split("translate3d")[1];
+				nums = nums.slice(1, nums.length-1).split("px,");
+				
+				targetTransformX = parseInt(nums[0]);
+				targetTransformY = parseInt(nums[1]);
+			}
+
+			var offsetBefore = target.offsetLeft;
+			target.parentElement.insertBefore(target, icons[new_pos].nextSibling);
+			var offsetAfter = target.offsetLeft;
+			target.style.transform = `translate3d(${targetTransformX+(offsetBefore-offsetAfter)}px,${targetTransformY}px,0px)`;
+		}
+		else {
+
+			for (var i = new_pos; i < last_pos; i++) {
+				var item = icons[i];
+				item.style.transform = `translate3d(${-1*(target.offsetWidth+8)}px,0px,0px)`;
+				item.style.transition = null;
+			}
+
+			var targetTransformX = 0;
+			var targetTransformY = 0;
+			if (target.style.transform != '') {
+			
+				var nums = target.style.transform.split("translate3d")[1];
+				nums = nums.slice(1, nums.length-1).split("px,");
+				
+				targetTransformX = parseInt(nums[0]);
+				targetTransformY = parseInt(nums[1]);
+			}
+
+			var offsetBefore = target.offsetLeft;
+			target.parentElement.insertBefore(target, icons[new_pos]);
+			var offsetAfter = target.offsetLeft;
+			target.style.transform = `translate3d(${targetTransformX+(offsetBefore-offsetAfter)}px,${targetTransformY}px,0px)`;
+		}
+	}
+}
+
+const animateIcon = (e, target, info) => {
+	var icons = target.parentElement.querySelectorAll(".img-container, .app-split");
+	for (var i = 0; i < icons.length; i++) {
+		var item = icons[i];
+		if (item != target) {
+			if (item.style.transform) {
+				item.style.transition = "transform 0.2s ease-in-out";
+				item.style.transform = null;
+			}
+		}
+	}
 }
 
 const returnIcon = (e, target, info) => {
 	target.style.transition = "transform 0.1s ease-in-out";
 	target.style.transform = null;
 	target.style.zIndex = null;
+	target.parentElement.style.zIndex = null;
 }
 
 const newTab = (e, target) => {
@@ -1435,7 +1482,7 @@ class Appbar {
 				img.src = item["src"];
 				img.id = `app-icon${i}`;
 				i+=1; // increment id
-				img.addEventListener("mousedown", e => {DragAndDrop.add(e, `#${img.id}`, `#${img_container.id}`, undefined, iconDropTransition, undefined, moveIcon, undefined, returnIcon)});
+				img.addEventListener("mousedown", e => {DragAndDrop.add(e, `#${img.id}`, `#${img_container.id}`, undefined, iconDropTransition, moveIcon, animateIcon, undefined, returnIcon)});
 
 				// create underlines container
 				var underlines = document.createElement("div");
