@@ -82,19 +82,19 @@ Scrollbar.set(scroll_list);
 // -- //
 
 var app_bar = document.querySelector(".app-bar");
-app_bar.addEventListener("mousedown", e => {DragAndDrop.add(e, ".app-bar", ".app-bar", barDropTransition, undefined, swapBar, undefined, insertBar)});
+app_bar.addEventListener("mousedown", e => {DragAndDrop.add(e, ".app-bar", ".app-bar", barDropTransition, undefined, swapBar, animateBar, undefined, insertBar)});
 window.addEventListener("mouseup", e => {DragAndDrop.drop(e, ".app-bar")});
 
 var menu_bar = document.querySelector(".menu-bar");
-menu_bar.addEventListener("mousedown", e => {DragAndDrop.add(e, ".menu-bar", ".menu-bar", barDropTransition, undefined, swapBar, undefined, insertBar)});
+menu_bar.addEventListener("mousedown", e => {DragAndDrop.add(e, ".menu-bar", ".menu-bar", barDropTransition, undefined, swapBar, animateBar, undefined, insertBar)});
 window.addEventListener("mouseup", e => {DragAndDrop.drop(e, ".menu-bar")});
 
 var scroll_bar = document.querySelector(".scroll-bar");
-scroll_bar.addEventListener("mousedown", e => {DragAndDrop.add(e, ".scroll-bar", ".scroll-bar", barDropTransition, undefined, swapBar, undefined, insertBar)});
+scroll_bar.addEventListener("mousedown", e => {DragAndDrop.add(e, ".scroll-bar", ".scroll-bar", barDropTransition, undefined, swapBar, animateBar, undefined, insertBar)});
 window.addEventListener("mouseup", e => {DragAndDrop.drop(e, ".scroll-bar")});
 
 var info_bar = document.querySelector(".info-bar");
-info_bar.addEventListener("mousedown", e => {DragAndDrop.add(e, ".info-bar", ".info-bar", barDropTransition, undefined, swapBar, undefined, insertBar)});
+info_bar.addEventListener("mousedown", e => {DragAndDrop.add(e, ".info-bar", ".info-bar", barDropTransition, undefined, swapBar, animateBar, undefined, insertBar)});
 window.addEventListener("mouseup", e => {DragAndDrop.drop(e, ".info-bar")});
 
 demo_body.querySelector("#avdan-menu").addEventListener("click", e => {

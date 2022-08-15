@@ -656,50 +656,89 @@ const insertBar = (e, target, info) => {
 
 const swapBar = (e, target, info) => {
 	var dock = document.querySelector(".dock");
+	var insAfter, last_pos, new_pos;
+	var bars = dock.children;
 
 	if (!target.classList.contains("dragged")) {
-		for (var i = 0; i < dock.children.length; i++) {
-			var item = dock.children[i];
+		for (var i = 0; i < bars.length; i++) {
+			var item = bars[i];
 			if (item != target) {
 				var x1 = dock.offsetLeft + item.offsetLeft;
 				var y1 = dock.offsetTop + item.offsetTop, y2 = y1 + item.offsetHeight;
 
 				if (x1 <= e.clientX && e.clientX <= (x1 + item.offsetWidth/2) && y1 <= e.clientY && e.clientY <= y2) {
-					var targetTransformX = 0, targetTransformY = 0;
-					if (target.style.transform != '') {
-					
-						var nums = target.style.transform.split("translate3d")[1];
-						nums = nums.slice(1, nums.length-1).split("px,");
-						
-						targetTransformX = +nums[0];
-						targetTransformY = +nums[1];
-					}
-
-					var offsetBefore = target.offsetLeft;
-					target.parentElement.insertBefore(target, item);
-					var offsetAfter = target.offsetLeft;
-
-					target.style.transform = `translate3d(${targetTransformX+(offsetBefore-offsetAfter)}px,${targetTransformY}px,0px)`;
-					return
+					new_pos = i;
+					if (insAfter) insAfter = false;
 				}
 				else if ((x1 + item.offsetWidth/2) <= e.clientX && e.clientX <= (x1 + item.offsetWidth) && y1 <= e.clientY && e.clientY <= y2) {
-					var targetTransformX = 0, targetTransformY = 0;
-					if (target.style.transform != '') {
-					
-						var nums = target.style.transform.split("translate3d")[1];
-						nums = nums.slice(1, nums.length-1).split("px,");
-						
-						targetTransformX = +nums[0];
-						targetTransformY = +nums[1];
-					}
-
-					var offsetBefore = target.offsetLeft;
-					target.parentElement.insertBefore(target, item.nextSibling);
-					var offsetAfter = target.offsetLeft;
-
-					target.style.transform = `translate3d(${targetTransformX+(offsetBefore-offsetAfter)}px,${targetTransformY}px,0px)`;
-					return
+					new_pos = i;
+					if (insAfter != false) insAfter = true;
 				}
+			}
+			else {
+				last_pos = i;
+			}
+		}
+
+		if (typeof new_pos == "number") {
+			if (insAfter) {
+				for (var i = last_pos+1; i < new_pos+1; i++) {
+					var item = bars[i];
+					item.style.transform = `translate3d(${target.offsetWidth+8}px,0px,0px)`;
+					item.style.transition = null;
+				}
+
+				var targetTransformX = 0, targetTransformY = 0;
+				if (target.style.transform != '') {
+				
+					var nums = target.style.transform.split("translate3d")[1];
+					nums = nums.slice(1, nums.length-1).split("px,");
+					
+					targetTransformX = +nums[0];
+					targetTransformY = +nums[1];
+				}
+
+				var offsetBefore = target.offsetLeft;
+				target.parentElement.insertBefore(target, bars[new_pos].nextSibling);
+				var offsetAfter = target.offsetLeft;
+
+				target.style.transform = `translate3d(${targetTransformX+(offsetBefore-offsetAfter)}px,${targetTransformY}px,0px)`;
+			}
+			else {
+				for (var i = new_pos; i < last_pos; i++) {
+					var item = bars[i];
+					item.style.transform = `translate3d(${-1*(target.offsetWidth+8)}px,0px,0px)`;
+					item.style.transition = null;
+				}
+
+				var targetTransformX = 0, targetTransformY = 0;
+				if (target.style.transform != '') {
+				
+					var nums = target.style.transform.split("translate3d")[1];
+					nums = nums.slice(1, nums.length-1).split("px,");
+					
+					targetTransformX = +nums[0];
+					targetTransformY = +nums[1];
+				}
+
+				var offsetBefore = target.offsetLeft;
+				target.parentElement.insertBefore(target, bars[new_pos]);
+				var offsetAfter = target.offsetLeft;
+
+				target.style.transform = `translate3d(${targetTransformX+(offsetBefore-offsetAfter)}px,${targetTransformY}px,0px)`;
+			}
+		}
+	}
+}
+
+const animateBar = (e, target, info) => {
+	var bars = document.querySelector(".dock").children;
+	for (var i = 0; i < bars.length; i++) {
+		var item = bars[i];
+		if (item != target) {
+			if (item.style.transform) {
+				item.style.transition = "transform 0.2s ease-in-out";
+				item.style.transform = null;
 			}
 		}
 	}
