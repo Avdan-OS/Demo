@@ -59,8 +59,8 @@ class DragAndDrop {
 				var nums = target.style.transform.split("translate3d")[1];
 				nums = nums.slice(1, nums.length-1).split("px,");
 				
-				targetTransformX = parseInt(nums[0]);
-				targetTransformY = parseInt(nums[1]);
+				targetTransformX = +nums[0];
+				targetTransformY = +nums[1];
 			}
 
 			// ad extraX or extraY
@@ -158,8 +158,7 @@ class DragAndDrop {
 				var nums = target.style.transform.split("translate3d")[1];
 				nums = nums.slice(1, nums.length-1).split("px,");
 				
-				var targetTransformX = parseInt(nums[0]);
-				var targetTransformY = parseInt(nums[1]);
+				var targetTransformX = +nums[0], targetTransformY = +nums[1];
 			}
 
 			// delete extraX and extraY
@@ -199,8 +198,7 @@ class DragAndDrop {
 				var nums = target.style.transform.split("translate3d")[1];
 				nums = nums.slice(1, nums.length-1).split("px,");
 				
-				var targetTransformX = parseInt(nums[0]);
-				var targetTransformY = parseInt(nums[1]);
+				var targetTransformX = +nums[0], targetTransformY = +nums[1];
 			}
 
 			// delete extraX and extraY
