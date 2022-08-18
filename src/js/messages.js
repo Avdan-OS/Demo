@@ -58,7 +58,7 @@ var messages_chat_list_items = [
 			},
 			{
 				"send_by" : "person",
-				"content" : "<a href='https://github.com/CodeHeister/avdan_web'>Avdan Demo</a>",
+				"content" : "<a href='https://docs.avdanos.com/demo/demo-intro' target='_blank'>Avdan Demo</a>",
 				"time" : "9:18 PM"
 			},
 			{
@@ -78,12 +78,12 @@ var messages_chat_list_items = [
 			},
 			{
 				"send_by" : "person",
-				"content" : "Hold shift and and drag it",
+				"content" : "Drag it to swap",
 				"time" : "9:22 PM"
 			},
 			{
 				"send_by" : "person",
-				"content" : "In that case you can change it's place droping it over other tabs in the same window",
+				"content" : "In that case you can change it's place dropping it over other tabs in the same window",
 				"time" : "9:23 PM"
 			},
 			{
