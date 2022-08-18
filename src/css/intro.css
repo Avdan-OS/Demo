@@ -41,7 +41,6 @@
 	height: 100%;
 	visibility: hidden;
 	opacity: 0;
-	animation-name : make-visible;
 	animation-duration : 5.7s;
 	background-color: var(--inner-first-color);
 	z-index: 8;
@@ -51,9 +50,8 @@
 	width: 50vw;
 }
 
-#a1, #v, #d, #a2, #n, #o, #s {
+.intro-letter {
 	fill: var(--inner-first-color);
-	animation-name: outer-animate;
 	animation-duration: 2.6s;
 }
 
