@@ -154,10 +154,12 @@
 
 .wl {
 	left: -5px;
+	cursor: w-resize;
 }
 
 .wr {
 	right: -5px;
+	cursor: e-resize;
 }
 
 .ht, .hb {
@@ -169,10 +171,12 @@
 
 .ht {
 	top: -5px;
+	cursor: n-resize;
 }
 
 .hb {
 	bottom: -5px;
+	cursor: s-resize;
 }
 
 .whlt, .whrt, .whlb, .whrb {
@@ -184,21 +188,25 @@
 .whlt {
 	top: -5px;
 	left: -5px;
+	cursor: nw-resize;
 }
 
 .whrt {
 	top: -5px;
 	right: -5px;
+	cursor: ne-resize;
 }
 
 .whrb {
 	bottom: -5px;
 	right: -5px;
+	cursor: se-resize;
 }
 
 .whlb {
 	bottom: -5px;
 	left: -5px;
+	cursor: sw-resize;
 }
 
 /* 
