@@ -8,12 +8,14 @@ else {
 
 // Start intro animations when fully loaded.
 window.addEventListener("load", () => {
-	let intro = document.querySelector(".intro");
-	intro.style.animationName = "make-visible";
-	intro.style.visibility = "hidden";
-	intro.style.opacity = 0;
+	var intro = document.querySelector(".intro");
+	if (intro) {
+		intro.style.animationName = "make-visible";
+		intro.style.visibility = "hidden";
+		intro.style.opacity = 0;
 
-	document.querySelectorAll(".intro-letter").forEach((letter => {
-		letter.style.animationName = "outer-animate";
-	}));
+		document.querySelectorAll(".intro-letter").forEach((letter => {
+			letter.style.animationName = "outer-animate";
+		}));
+	}
 });
