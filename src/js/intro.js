@@ -1,5 +1,5 @@
 let intro = document.querySelector(".intro");
-if (Cookie.get("intro") != "" && false){
+if (Cookie.get("intro") != ""){
 	intro.parentElement.removeChild(intro);
 }
 else {
