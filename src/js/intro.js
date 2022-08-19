@@ -1,5 +1,5 @@
 let intro = document.querySelector(".intro");
-if (Cookie.get("intro")!=""){
+if (Cookie.get("intro") != "" && false){
 	intro.parentElement.removeChild(intro);
 }
 else {
@@ -8,7 +8,10 @@ else {
 
 // Start intro animations when fully loaded.
 window.addEventListener("load", () => {
-	document.querySelector(".intro").style.animationName = "make-visible";
+	let intro = document.querySelector(".intro");
+	intro.style.animationName = "make-visible";
+	intro.style.visibility = "hidden";
+	intro.style.opacity = 0;
 
 	document.querySelectorAll(".intro-letter").forEach((letter => {
 		letter.style.animationName = "outer-animate";
