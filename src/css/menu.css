@@ -38,7 +38,7 @@
 }
 
 .menu-main-header-weather-top svg {
-	height: 90%;
+	width: 20%;
 }
 
 .menu-main-header-bottom-item-icon-holder svg {
@@ -61,7 +61,6 @@
 .menu-main-header-weather-top-left {
 	display: flex;
 	flex-direction: column;
-	margin-right: auto;
 	gap: 0.25rem;
 }
 
@@ -84,6 +83,7 @@
 	display: flex;
 	flex-direction: column;
 	gap: 0.15rem;
+	margin-left: auto;
 }
 
 .menu-main-header-weather-top-right-info-status {
@@ -202,4 +202,25 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
+}
+
+.menu-main-content {
+    display: flex;
+    flex-direction: row;
+	gap: 0.5rem;
+    width: 100%;
+    height: 100%;
+}
+
+.menu-main-content-left {
+	flex-grow: 2;
+}
+
+.menu_main_content_split {
+	background-color: var(--light-bg);
+	border-color: var(--light-bg);
+}
+
+.menu-main-content-right {
+	flex-grow: 1;
 }

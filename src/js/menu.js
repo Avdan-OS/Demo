@@ -266,9 +266,100 @@ class Menu {
 			menu_main_header_devices.appendChild(device_item);
 		});
 
+		var menu_main_content = document.createElement("div");
+		menu_main_content.classList.add("menu-main-content");
+
+		var menu_main_content_left = document.createElement("div");
+		menu_main_content_left.classList.add("menu-main-content-left");
+
+		var menu_main_content_left_pinned = document.createElement("div");
+		menu_main_content_left_pinned.classList.add("menu-main-content-left-item");
+
+		var menu_main_content_left_pinned_title = document.createElement("div");
+		menu_main_content_left_pinned_title.classList.add("menu-main-content-left-title");
+		menu_main_content_left_pinned_title.innerHTML = "Pinned Apps";
+
+		var Mail = new Placeholder("Mail", "src/images/demo/icons/Apps/Mail.png");
+		var Photos = new Placeholder("Photos", "src/images/demo/icons/Apps/Gallery.png");
+		var Calendar = new Placeholder("Calendar", "src/images/demo/icons/Apps/Calendar.png");
+		var Notes = new Placeholder("Notes", "src/images/demo/icons/Apps/Notes.png");
+		var Settings = new Placeholder("Settings", "src/images/demo/icons/Apps/Settings.png");
+
+		var pinned_apps_config = [
+			{
+				"title" : Mail.title,
+				"src" : Mail.src,
+				"content" : Mail.content
+			},
+			{
+				"title" : Photos.title,
+				"src" : Photos.src,
+				"content" : Photos.content
+			},
+			{
+				"title" : Lale.title, 
+				"src" : Lale.src, 
+				"content" : Lale.content, 
+			},
+			{
+				"title" : Calendar.title,
+				"src" : Calendar.src,
+				"content" : Calendar.content
+			},
+			{
+				"title" : Notes.title,
+				"src" : Notes.src,
+				"content" : Notes.content
+			},
+			{
+				"title" : Messages.title, 
+				"src" : Messages.src, 
+				"content" : Messages.content, 
+				"listenerAdder" : Messages.listener, 
+				"extraClass" : Messages.extraClass 
+			},
+			{
+				"title" : Music.title,
+				"src" : Music.src,
+				"content" : Music.content,
+				"listenerAdder" : Music.listener
+			},
+			{
+				"title" : Filemanager.title, // window title
+				"src" : Filemanager.src, // appbar/window icon
+				"content" : Filemanager.content, // content for the window
+				"extraClass" : Filemanager.extraClass // extra classes for window (optional)
+			},
+		]
+
+		var menu_main_content_left_pinned_apps = document.createElement("div");
+		menu_main_content_left_pinned_apps.classList.add("menu-main-content-left-pinned-apps");
+
+		pinned_apps_config.forEach(item => {
+			var menu_main_content_left_pinned_app = document.createElement("div");
+			menu_main_content_left_pinned_app.classList.add("menu-main-content-left-pinned-app");
+
+		});
+
+		var menu_main_content_left_setups = document.createElement("div");
+		menu_main_content_left_setups.classList.add("menu-main-content-left-item");
+
+		menu_main_content.appendChild(menu_main_content_left);
+
+		var menu_main_content_split = document.createElement("hr");
+		menu_main_content_split.classList.add("menu_main_content_split");
+
+		menu_main_content.appendChild(menu_main_content_split);
+
+		var menu_main_content_right = document.createElement("div");
+		menu_main_content_right.classList.add("menu-main-content-right");
+
+		menu_main_content.appendChild(menu_main_content_right);
+
 		menu_main_header.appendChild(menu_main_header_devices);
 
 		menu_main_frame.appendChild(menu_main_header);
+		menu_main_frame.appendChild(menu_main_content);
 
 		menu_content.appendChild(menu_main_frame);
 		this.content = menu_content;

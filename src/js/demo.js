@@ -111,7 +111,7 @@ demo_body.querySelector("#avdan-menu").addEventListener("click", e => {
 	}
 });
 
-demo_body.addEventListener("resize", e => {
+window.addEventListener("resize", e => {
 	var menu = document.querySelector(".avdan-menu");
 	if (menu) {
 		menu.style.transform = `translate3d(${demo_body.offsetWidth/2-menu.offsetWidth/2}px, ${(demo_body.offsetHeight-document.querySelector('.dock').offsetHeight)-(menu.offsetHeight+16)}px, 0)`;
