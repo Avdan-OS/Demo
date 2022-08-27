@@ -339,10 +339,42 @@ class Menu {
 			var menu_main_content_left_pinned_app = document.createElement("div");
 			menu_main_content_left_pinned_app.classList.add("menu-main-content-left-pinned-app");
 
+			var img_wrap = document.createElement("div");
+			img_wrap.classList.add("menu-main-content-left-pinned-app-img-wrap");
+
+			var app_img = document.createElement("img");
+			app_img.src = item.src;
+
+			var app_title = document.createElement("div");
+			app_title.classList.add("menu-main-content-left-pinned-app-title");
+			app_title.innerHTML = item.title;
+
+			img_wrap.appendChild(app_img);
+
+			menu_main_content_left_pinned_app.appendChild(img_wrap);
+			menu_main_content_left_pinned_app.appendChild(app_title);
+
+			menu_main_content_left_pinned_apps.appendChild(menu_main_content_left_pinned_app);
 		});
+
+		menu_main_content_left_pinned.appendChild(menu_main_content_left_pinned_title);
+		menu_main_content_left_pinned.appendChild(menu_main_content_left_pinned_apps);
+		
+		menu_main_content_left.appendChild(menu_main_content_left_pinned);
 
 		var menu_main_content_left_setups = document.createElement("div");
 		menu_main_content_left_setups.classList.add("menu-main-content-left-item");
+
+		var menu_main_content_left_setups_title = document.createElement("div");
+		menu_main_content_left_setups_title.classList.add("menu-main-content-left-setups-title");
+		menu_main_content_left_setups_title.innerHTML = "App Setups";
+
+		var setups_config = [
+		]
+
+		menu_main_content_left_setups.appendChild(menu_main_content_left_setups_title);
+
+		menu_main_content_left.appendChild(menu_main_content_left_setups);
 
 		menu_main_content.appendChild(menu_main_content_left);
 
