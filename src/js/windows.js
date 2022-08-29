@@ -231,6 +231,7 @@ const dropTransition = (e, target, info) => {
 	while (!win.classList.contains("window")) {
 		win = win.parentElement;
 	}
+
 	win.querySelectorAll(".win-tab").forEach(item => {
 		item.style.transition = null;
 	});
