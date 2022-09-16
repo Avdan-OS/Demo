@@ -30,6 +30,24 @@ class Player {
 			"url" : "src/audio/NF - Let You Down.mp3",
 			"src" : "src/images/NF - Let You Down.webp"
 		},
+		{
+			"title" : "Aria Math",
+			"artist" : "C418",
+			"url" : "src/audio/C418 - Aria Math.mp3",
+			"src" : "src/images/C418 - Aria Math.jpg"
+		},
+		{
+			"title" : "Deadrose",
+			"artist" : "Unprocessed",
+			"url" : "src/audio/Unprocessed - Deadrose.mp3",
+			"src" : "src/images/Unprocessed - Deadrose.jpg"
+		},
+		{
+			"title" : "Origami",
+			"artist" : "The Surrealist",
+			"url" : "src/audio/The Surrealist - Origami.mp3",
+			"src" : "src/images/The Surrealist - Origami.jpg"
+		},
 	]
 
 	static #audio = new Audio(Player.#list[Player.#pos].url);
