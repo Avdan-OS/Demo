@@ -509,29 +509,7 @@ const remakeWindow = (e, target, info) => {
 					DragAndDrop.add(e, `#${target.id}`, `#${target.id}`, undefined, dropTransition, swapTab, animateTab, undefined, remakeWindow); // add this function to tab
 			});
 			window.addEventListener("mouseup", e => {DragAndDrop.drop(e, `#${target.id}`)}); // add global drop check for this tab
-			item.addEventListener("dblclick", e => {
-				var id_num = e.currentTarget.id.match("[0-9]+"); // get id to catch element from window
-				var win = e.currentTarget;
-				while (!win.classList.contains("window")) {
-					win = win.parentElement;
-				}
-
-				var target_content_holder = win.querySelector("#content-holder"+id_num); // catch content
-				var icon_block = win.querySelector("#icon-block"+id_num); // catch icon
-
-				var i = 1;
-				var content_holders = win.querySelectorAll(".content-holder");
-				content_holders.forEach(item => {
-					if (item.style.display) i+=1;
-				});
-				if (i == content_holders.length) {
-					target_content_holder.previousSibling.style.display = null;
-				}
-
-				e.currentTarget.parentElement.removeChild(e.currentTarget);
-				target_content_holder.parentElement.removeChild(target_content_holder);
-				icon_block.parentElement.removeChild(icon_block);
-			});
+			item.addEventListener("dblclick", e => {Window.closeTab(e.currentTarget);});
 		}
 
 		if (panel_x1 <= e.clientX && e.clientX <= panel_x2 && panel_y1 <= e.clientY && e.clientY <= panel_y2) { // if over panel
@@ -557,7 +535,7 @@ const remakeWindow = (e, target, info) => {
 		}
 
 		// recreate min-width for current window if tab out
-		win.style.minWidth = win.querySelector(".win-panel-buttons").offsetWidth+tab_holder.offsetWidth+1.75*16+"px";
+		win.style.minWidth = win.querySelector(".win-panel-buttons").offsetWidth+win.querySelector(".tab-holder").offsetWidth+1.75*16+"px";
 	}
 }
 
@@ -806,50 +784,13 @@ const insertCheck = (e, target, info) => {
 		
 		// get current window
 		var win = document.querySelector(info.target);
-		
-		// move all tabs to new window
-		win.querySelectorAll(".win-tab").forEach(item => {
-			highestWin.querySelector(".tab-holder").insertBefore(item, highestWin.querySelector(".tab-add"));
 
-			// if tab doesn't have a drag event
-			if (!item.hasDrag) {
-				item.hasDrag = true;
-				item.addEventListener("mousedown", e => {
-					DragAndDrop.add(e, `#${item.id}`, `#${item.id}`, undefined, dropTransition, swapTab, animateTab, undefined, remakeWindow);
-				});
-				window.addEventListener("mouseup", e => {DragAndDrop.drop(e, `#${item.id}`)});
-				item.addEventListener("dblclick", e => {
-					var id_num = e.currentTarget.id.match("[0-9]+"); // get id to catch element from window
-					var win = e.currentTarget;
-					while (!win.classList.contains("window")) {
-						win = win.parentElement;
-					}
-					var target_content_holder = win.querySelector("#content-holder"+id_num); // catch content
-					var icon_block = win.querySelector("#icon-block"+id_num); // catch icon
-					e.currentTarget.parentElement.removeChild(e.currentTarget);
-					target_content_holder.parentElement.removeChild(target_content_holder);
-					icon_block.parentElement.removeChild(icon_block);
-				});
-			}
-
-		});
-
-		// move all content to new window
-		win.querySelectorAll(".content-holder").forEach(item => {
-			if (panel_x1 <= e.clientX && e.clientX <= panel_x2 && panel_y1 <= e.clientY && e.clientY <= panel_y2 || false) {
-				item.style.display = "none";
-			}
-			highestWin.querySelector(".container").appendChild(item);
-		});
-		
-		// move all icons to new window
-		win.querySelectorAll(".icon-block").forEach(item => {
-			item.style.display = "none";
-			highestWin.insertBefore(item, highestWin.querySelector(".wl"));
-		});
-		
-		// close current window
-		Window.close(e, win);
+		if (panel_x1 <= e.clientX && e.clientX <= panel_x2 && panel_y1 <= e.clientY && e.clientY <= panel_y2) {
+			Window.merge(highestWin, false, win);
+		}
+		else {
+			Window.merge(highestWin, win);
+		}
 
 		// change minimal sizes
 		highestWin.style.minWidth = highestWin.querySelector(".win-panel-buttons").offsetWidth+highestWin.querySelector(".tab-holder").offsetWidth+1.75*16+"px";
@@ -1021,27 +962,7 @@ const newTab = (e, target) => {
 		}
 	});
 	
-	new_tab.addEventListener("dblclick", e => {
-		var id_num = e.currentTarget.id.match("[0-9]+"); // get id to catch element from window
-		var win = e.currentTarget;
-		while (!win.classList.contains("window")) {
-			win = win.parentElement;
-		}
-		var target_content_holder = win.querySelector("#content-holder"+id_num); // catch content
-		var icon_block = win.querySelector("#icon-block"+id_num); // catch icon
-
-		var i = 1;
-		var content_holders = win.querySelectorAll(".content-holder");
-		content_holders.forEach(item => {
-			if (item.style.display) {i+=1}
-		});
-		if (i == content_holders.length) {
-			target_content_holder.previousSibling.style.display = null;
-		}
-		e.currentTarget.parentElement.removeChild(e.currentTarget);
-		target_content_holder.parentElement.removeChild(target_content_holder);
-		icon_block.parentElement.removeChild(icon_block);
-	});
+	new_tab.addEventListener("dblclick", e => {Window.closeTab(e.currentTarget);});
 
 	var new_tab_content = document.createElement("div");
 	new_tab_content.classList.add("new-tab-content");
@@ -1154,35 +1075,31 @@ class Window {
 		return this;
 	}
 
-	static close = (e, win) => {
-		if (win.classList.contains("window") || win.classList.contains("static-window")) {
-			win.parentElement.removeChild(win);
-			var underline = document.querySelector(`#underline${win.id.match("[0-9]+")}`);
-			
-			if (underline) {
-				underline.parentElement.removeChild(underline);
-			}
+	static close = (e, ...args) => {
+		for (const win of args) {
+			if (win.classList.contains("window") || win.classList.contains("static-window")) {
+				win.parentElement.removeChild(win);
+				var underline = document.querySelector(`#underline${win.id.match("[0-9]+")}`);
+				
+				if (underline) {
+					underline.parentElement.removeChild(underline);
+				}
 
-			return this;
-		}
-		else {
-			console.error("Window.close: not a window");
-			return 1;
+				return this;
+			}
+			else {
+				console.error(`${this.name}.close: not a window`);
+				return 1;
+			}
 		}
 	}
 
 
 	static make = (content, icon_src, title, extraClass, makeClone, addPanel = true, addResize = true, listenerAdder = content => {}) => {
 		var win = document.createElement("div");
-		if (addPanel) {
-			win.classList.add("window");
-		}
-		else {
-			win.classList.add("static-window");
-		}
+		win.classList.add(addPanel ? "window" : "static-window");
 		win.id = "window"+Window.#win_id;
-		win.style.zIndex = Layer.get();
-		Layer.inc();
+		win.style.zIndex = Layer.get(); Layer.inc();
 		win.setAttribute('draggable', false);
 		if (extraClass) {
 			extraClass.forEach(item => {
@@ -1409,6 +1326,75 @@ class Window {
 		Window.#win_id += 1;
 		return win;
 	}
+
+	static merge = (main_win, ...args) => {
+		var is_shown = true;
+		for (const arg of args) {
+			if (typeof arg == "boolean") {
+				is_shown = arg;
+			}
+			else {
+				var merge_win = arg;
+				merge_win.querySelectorAll(".win-tab").forEach(item => {
+					main_win.querySelector(".tab-holder").insertBefore(item, main_win.querySelector(".tab-add"));
+
+					// if tab doesn't have a drag event
+					if (!item.hasDrag) {
+						item.hasDrag = true;
+						item.addEventListener("mousedown", e => {
+							DragAndDrop.add(e, `#${item.id}`, `#${item.id}`, undefined, dropTransition, swapTab, animateTab, undefined, remakeWindow);
+						});
+						window.addEventListener("mouseup", e => {DragAndDrop.drop(e, `#${item.id}`)});
+						item.addEventListener("dblclick", e => {Window.closeTab(e.currentTarget);});
+					}
+
+				});
+
+				// move all content to new window
+				merge_win.querySelectorAll(".content-holder").forEach(item => {
+					item.style.display = is_shown ? null : "none";
+					main_win.querySelector(".container").appendChild(item);
+				});
+				
+				// move all icons to new window
+				merge_win.querySelectorAll(".icon-block").forEach(item => {
+					item.style.display = "none";
+					main_win.insertBefore(item, main_win.querySelector(".wl"));
+				});
+				
+				// close current window
+				Window.close(undefined, merge_win);
+			}
+		}
+		return Window;
+	}
+
+	static closeTab = (...args) => {
+		for (const tab of args) {
+			var id_num = tab.id.match("[0-9]+"); // get id to catch element from window
+			var win = tab;
+			while (!win.classList.contains("window")) {
+				win = win.parentElement;
+			}
+
+			var target_content_holder = win.querySelector("#content-holder"+id_num); // catch content
+			var icon_block = win.querySelector("#icon-block"+id_num); // catch icon
+
+			var i = 1;
+			var content_holders = win.querySelectorAll(".content-holder");
+			content_holders.forEach(item => {
+				if (item.style.display) i+=1;
+			});
+			if (i == content_holders.length) {
+				target_content_holder.previousSibling.style.display = null;
+			}
+
+			tab.parentElement.removeChild(tab);
+			target_content_holder.parentElement.removeChild(target_content_holder);
+			icon_block.parentElement.removeChild(icon_block);
+		}
+		return this;
+	}
 }
 
 // A P P  B A R  F I L L E R
@@ -1584,8 +1570,15 @@ class Workspace {
 		return Workspace.#current_ws;
 	}
 
-	static add = win => {
-		document.querySelector(`#workspace${Workspace.#current_ws}`).appendChild(win);
+	static add = (...args) => {
+		for (const win of args) {
+			if (win.classList.contains("window") || win.classList.contains("static-window")) {
+				document.querySelector(`#workspace${Workspace.#current_ws}`).appendChild(win);
+			}
+			else {
+				console.error(`${this.name}.add: not a window`);
+			}
+		}
 		return this;
 	}
 
@@ -1660,19 +1653,21 @@ class Keylogger {
 		});
 	}
 
-	static press = (keyCode, func) => {
-		var info = {
-			"keyCode" : keyCode,
-			"func" : func
+	static press = (keyCode, ...args) => {
+		for (const func of args) { 
+			var info = {
+				"keyCode" : keyCode,
+				"func" : func
+			}
+			Keylogger.#list.push(info);
 		}
-		Keylogger.#list.push(info);
 		return Keylogger;
 	}
 
-	static unpress = (keyCode, func) => {
+	static unpress = (keyCode, ...args) => {
 		var i = 0;
 		while (i < Keylogger.#list.length) {
-			if (typeof func != "function") {
+			if (args.length == 0) {
 				if (Keylogger.#list[i].keyCode == keyCode) {
 					var removed = Keylogger.#list.splice(i, 1)[0]
 				}
@@ -1681,11 +1676,13 @@ class Keylogger {
 				}
 			}
 			else {
-				if (Keylogger.#list[i].keyCode == keyCode && Keylogger.#list[i].func == func) {
-					var removed = Keylogger.#list.splice(i, 1)[0]
-				}
-				else {
-					i++;
+				for (const func of args) {
+					if (Keylogger.#list[i].keyCode == keyCode && Keylogger.#list[i].func == func) {
+						var removed = Keylogger.#list.splice(i, 1)[0]
+					}
+					else {
+						i++;
+					}
 				}
 			}
 		}
@@ -1700,8 +1697,10 @@ class Keylogger {
 		return Keylogger.#list;
 	}
 
-	static append = (keyCode) => {
-		Keylogger.#keys.push(keyCode);
+	static append = (...args) => {
+		for (const keyCode of args) {
+			Keylogger.#keys.push(keyCode);
+		}
 		
 		return this;
 	}
@@ -1711,8 +1710,8 @@ class Keylogger {
 		return this;
 	}
 
-	static remove = (i) => {
-		Keylogger.#keys.splice(i, 1);
+	static remove = (i, n = 1) => {
+		Keylogger.#keys.splice(i, n);
 		return this;
 	}
 }
