@@ -397,7 +397,7 @@ class Messages {
 		Messages.content = messages_content;
 	}
 	
-	static listener = (content) => {
+	static async listener(content) {
 		for (var i = 0; i < messages_chat_list_items.length; i++) {
 			var item = messages_chat_list_items[i];
 			var messages_chat_list_item = document.createElement("div");

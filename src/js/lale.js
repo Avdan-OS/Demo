@@ -70,6 +70,6 @@ class Lale {
 		Lale.content = lale_content;
 	}
 
-	static listener = (content) => {
+	static async listener(content) {
 	}
 }

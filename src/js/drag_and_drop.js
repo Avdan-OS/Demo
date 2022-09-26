@@ -183,7 +183,7 @@ class DragAndDrop {
 			}
 
 			// target function on drop
-			if (typeof info.target_out_f == "fuction") {
+			if (typeof info.target_out_f == "function") {
 				info.target_out_f(e, target, info);
 			}
 

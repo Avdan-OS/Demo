@@ -1095,7 +1095,7 @@ class Window {
 	}
 
 
-	static make = (content, icon_src, title, extraClass, makeClone, addPanel = true, addResize = true, listenerAdder = content => {}) => {
+	static make = (content, icon_src, title, extraClass, makeClone, addPanel = true, addResize = true, listenerAdder = async content => {}) => {
 		var win = document.createElement("div");
 		win.classList.add(addPanel ? "window" : "static-window");
 		win.id = "window"+Window.#win_id;
@@ -1299,7 +1299,11 @@ class Window {
 		content_holder.appendChild(innerContent);
 		container.appendChild(content_holder);
 
-		listenerAdder(innerContent);
+		listenerAdder(innerContent)
+			.then(() => {})
+			.catch(() => {
+				console.error(`Failed to load dynamic window content`);
+			});
 
 		if (addPanel) {
 			win.appendChild(panel);
@@ -1455,7 +1459,7 @@ class Appbar {
 					underlines.appendChild(underline);
 
 					// create window
-					var defaultFunc = content => {};
+					var defaultFunc = async content => {};
 					var win = Window.make(item.content, item.src, item.title, item.extraClass || [], true, true, true, item.listenerAdder || defaultFunc);
 					Workspace.add(win);
 					win.style.transform = `translate3d(${demo_body.offsetWidth/2-win.offsetWidth/2}px, ${demo_body.offsetHeight/2-win.offsetHeight/2}px, 0)`;

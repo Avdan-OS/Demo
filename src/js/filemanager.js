@@ -327,6 +327,6 @@ class Filemanager {
 		Filemanager.content = files_content;
 	}
 
-	static listener = (content) => {
+	static async listener(content) {
 	}
 }
