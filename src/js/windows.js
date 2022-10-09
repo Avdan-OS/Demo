@@ -445,25 +445,7 @@ const remakeWindow = (e, target, info) => {
 					// get selected underlines
 					var underlines = item.querySelector(".underlines");
 
-					// create new underline
-					var underline = document.createElement("div");
-					underline.classList.add("underline");
-					underline.id = `underline${Window.get()}`; // set new id
-
-					// add minimalize function
-					underline.addEventListener("click", e => {
-						var win = document.querySelector("#window"+e.currentTarget.id.match("[0-9]+")[0]); // catch new window (with new id)
-						if (win.style.display) {
-							e.currentTarget.style.backgroundColor = "var(--light-bg-hl)";
-							win.style.display = null;
-						}
-						else {
-							e.currentTarget.style.backgroundColor = "var(--light-bg)";
-							win.style.display = "none";
-						}
-					});
-
-					underlines.appendChild(underline); // add underline 
+					underlines.appendChild(Underline.getBind(Window.get())); // add underline 
 				}
 			});
 
@@ -1437,26 +1419,9 @@ class Appbar {
 				var img_wrap = document.createElement("div");
 				img_wrap.classList.add("img-wrapper");
 				img_wrap.addEventListener("click", e => { // add window creation
-				
-					// create new underline on click
-					var underline = document.createElement("div");
-					underline.classList.add("underline");
-					underline.id = `underline${Window.get()}`;
-
-					underline.addEventListener("click", e => { // add minimalize func
-						var win = document.querySelector("#window"+e.currentTarget.id.match("[0-9]+")[0]);
-						if (win.style.display) {
-							e.currentTarget.style.backgroundColor = "var(--light-bg-hl)";
-							win.style.display = null;
-						}
-						else {
-							e.currentTarget.style.backgroundColor = "var(--light-bg)";
-							win.style.display = "none";
-						}
-					});
 
 					// add underline on create
-					underlines.appendChild(underline);
+					underlines.appendChild(Underline.getBind(Window.get()));
 
 					// create window
 					var defaultFunc = async content => {};
@@ -1725,3 +1690,85 @@ demo_body.addEventListener("mouseleave", e => {
 	DragAndDrop.dropAll(e); 
 	Keylogger.wipe();
 }); // add out of bounds check
+
+/* ----------------------- */
+
+class Underline {
+	static #save_ws;
+
+	static {
+		Underline.#save_ws = Workspace.get();
+	}
+
+	static getBind(win_id) {
+		var underline = document.createElement("div");
+		underline.classList.add("underline");
+		underline.id = `underline${win_id}`;
+
+		underline.addEventListener("click", e => { // add minimalize func
+			var win = document.querySelector("#window"+e.currentTarget.id.match("[0-9]+")[0]);
+			
+			if (Keylogger.getKeys().includes(17)) {
+				if (win.save_display) {
+					e.currentTarget.style.backgroundColor = "var(--light-bg-hl)";
+					win.style.display = null;
+				}
+				else {
+					e.currentTarget.style.backgroundColor = "var(--light-bg)";
+					win.style.display = "none";
+				}
+			}
+			else {
+				win.style.zIndex = Layer.get();
+				win.save_z_index = null;
+				win.style.display = null;
+				win.save_display = null;
+				e.currentTarget.style.backgroundColor = "var(--light-bg-hl)";
+				
+				document.querySelectorAll(".window,.static-window").forEach(item => {
+					item.style.opacity = null;
+					item.style.filter = null;
+				});
+				
+				Layer.inc();
+			}
+			win.save_display = win.style.display;
+		});
+
+		underline.addEventListener("mouseover", e => {
+			var win = document.querySelector(`#window${e.currentTarget.id.match("[0-9]+")}`);
+			
+			document.querySelectorAll(".window,.static-window").forEach(item => {
+				if (item != win) {
+					item.style.opacity = "0.6";
+					item.style.filter = "blur(1px) grayscale(0.7)";
+				}
+				else {
+					item.save_z_index = item.style.zIndex;
+					item.style.zIndex = Layer.get();
+					item.save_display = item.style.display;
+					item.style.display = null;
+				}
+			});
+		});
+
+		underline.addEventListener("mouseout", e => {
+			var win = document.querySelector(`#window${e.currentTarget.id.match("[0-9]+")}`);
+			
+			if (win.save_z_index != null) {
+				win.style.zIndex = win.save_z_index;
+				win.save_z_index = null;
+			}
+
+			win.style.display = win.save_display;
+			win.save_display = null;
+
+			document.querySelectorAll(".window,.static-window").forEach(item => {
+				item.style.opacity = null;
+				item.style.filter = null;
+			});
+		});
+
+		return underline;
+	}
+}
