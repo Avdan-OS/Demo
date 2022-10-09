@@ -119,6 +119,15 @@
 	overflow: overlay;
 }
 
+.content-holder::-webkit-scrollbar {
+	display: none;
+}
+
+.content-holder:hover::-webkit-scrollbar {
+	display: block;
+}
+
+
 /*
  * +---------------------------------------+
  * | :: I N S E R T  D R A G  I C O N S :: |
