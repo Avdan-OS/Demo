@@ -10,43 +10,43 @@ class Player {
 			"title" : "AWOL",
 			"artist" : "Papa Khan",
 			"url" : "src/audio/Papa Khan - AWOL.mp3",
-			"src" : "src/images/Papa Khan - AWOL.jpg"
+			"src" : "src/images/demo/player/Papa Khan - AWOL.jpg"
 		},
 		{
 			"title" : "The Search",
 			"artist" : "NF",
 			"url" : "src/audio/NF - The Search.mp3",
-			"src" : "src/images/NF - The Search.jpg"
+			"src" : "src/images/demo/player/NF - The Search.jpg"
 		},
 		{
 			"title" : "Rain",
 			"artist" : "Papa Khan",
 			"url" : "src/audio/Papa Khan - Rain.mp3",
-			"src" : "src/images/Papa Khan - Rain.jpg"
+			"src" : "src/images/demo/player/Papa Khan - Rain.jpg"
 		},
 		{
 			"title" : "Let You Down",
 			"artist" : "NF",
 			"url" : "src/audio/NF - Let You Down.mp3",
-			"src" : "src/images/NF - Let You Down.webp"
+			"src" : "src/images/demo/player/NF - Let You Down.webp"
 		},
 		{
 			"title" : "Aria Math",
 			"artist" : "C418",
 			"url" : "src/audio/C418 - Aria Math.mp3",
-			"src" : "src/images/C418 - Aria Math.jpg"
+			"src" : "src/images/demo/player/C418 - Aria Math.jpg"
 		},
 		{
 			"title" : "Deadrose",
 			"artist" : "Unprocessed",
 			"url" : "src/audio/Unprocessed - Deadrose.mp3",
-			"src" : "src/images/Unprocessed - Deadrose.jpg"
+			"src" : "src/images/demo/player/Unprocessed - Deadrose.jpg"
 		},
 		{
 			"title" : "Origami",
 			"artist" : "The Surrealist",
 			"url" : "src/audio/The Surrealist - Origami.mp3",
-			"src" : "src/images/The Surrealist - Origami.jpg"
+			"src" : "src/images/demo/player/The Surrealist - Origami.jpg"
 		},
 	]
 
