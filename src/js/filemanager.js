@@ -7,6 +7,37 @@ class Filemanager {
 	static title = "Files";
 	static src = "src/images/demo/icons/Apps/Files.png";
 	static extraClass = ["file-manager"];
+	static contextMenu = [
+		{
+			"type" : "plain",
+			"icon" : ContextIcons.copy,
+			"text" : "Copy"
+		},
+		{
+			"type" : "plain",
+			"icon" : ContextIcons.paste,
+			"text" : "Paste"
+		},
+		{
+			"type" : "plain",
+			"icon" : ContextIcons.cut,
+			"text" : "Cut"
+		},
+		{
+			"type" : "plain",
+			"icon" : ContextIcons.download,
+			"text" : "Download"
+		},
+		{
+			"type" : "split",
+		},
+		{
+			"type" : "plain",
+			"icon" : ContextIcons.delete,
+			"text" : "Delete"
+		},
+	]
+
 	
 	static {
 		var files_content = document.createElement("div");

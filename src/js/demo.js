@@ -11,10 +11,11 @@ var Settings = new Placeholder("Settings", "src/images/demo/icons/Apps/Settings.
 // -- A P P B A R  C O N F I G S
 var apps_list = [
 	{
-		"title" : Filemanager.title, // window title
-		"src" : Filemanager.src, // appbar/window icon
-		"content" : Filemanager.content, // content for the window
-		"extraClass" : Filemanager.extraClass // extra classes for window (optional)
+		"title" : Filemanager.title,				// window title
+		"src" : Filemanager.src,					// appbar/window icon
+		"content" : Filemanager.content,			// content for the window
+		"extraClass" : Filemanager.extraClass,		// extra classes for window (optional)
+		"contextMenu" : Filemanager.contextMenu		// context menu
 	},
 	{
 		"title" : Mail.title,

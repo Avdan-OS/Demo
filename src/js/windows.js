@@ -276,7 +276,9 @@ const swapTab = (e, target, info) => {
 			var win_tab_x1 = x1 + panel.offsetLeft + item.offsetLeft, win_tab_x2 = win_tab_x1 + item.offsetWidth;
 			var win_tab_y1 = y1 + panel.offsetTop + item.offsetTop, win_tab_y2 = win_tab_y1 + item.offsetHeight;
 
-			if (win_tab_x1 <= e.clientX && e.clientX <= win_tab_x2 && win_tab_y1 <= e.clientY && e.clientY <= win_tab_y2) {
+			const { clientX, clientY } = e;
+			
+			if (win_tab_x1 <= clientX && clientX <= win_tab_x2 && win_tab_y1 <= clientY && clientY <= win_tab_y2) {
 				new_pos = i;
 				if (!insAfter) insAfter = false;
 
@@ -391,14 +393,16 @@ const remakeWindow = (e, target, info) => {
 	var icon_block = win.querySelector("#icon-block"+id_num); // catch icon
 	var icon_src = icon_block.querySelector("img").src; // get icon src
 
-	if (x1 <= e.clientX && e.clientX <= x2 && y1 <= e.clientY && e.clientY <= y2) { // check if over current window
+	const { clientX, clientY } = e;
+
+	if (x1 <= clientX && clientX <= x2 && y1 <= clientY && clientY <= y2) { // check if over current window
 		var container = win.querySelector(".container");
 
 		// get current window container coords
 		var container_x1 = x1 + container.offsetLeft, container_x2 = container_x1 + container.offsetWidth;
 		var container_y1 = y1 + container.offsetTop, container_y2 = container_y1 + container.offsetHeight;
 		
-		if (container_x1 <= e.clientX && e.clientX <= container_x2 && container_y1 <= e.clientY && e.clientY <= container_y2) { // if over container
+		if (container_x1 <= clientX && clientX <= container_x2 && container_y1 <= clientY && clientY <= container_y2) { // if over container
 			win.querySelector("#content-holder"+id_num).style.display = null; // make visible
 		}
 		
@@ -427,12 +431,15 @@ const remakeWindow = (e, target, info) => {
 			x1 = item.offsetLeft+targetTransformX, x2 = x1+item.offsetWidth;
 			y1 = item.offsetTop+targetTransformY, y2 = y1+item.offsetHeight;
 
-			if (x1 <= e.clientX && e.clientX <= x2 && y1 <= e.clientY && e.clientY <= y2) { // if over a window
+			if (x1 <= clientX && clientX <= x2 && y1 <= clientY && clientY <= y2) { // if over a window
 				if (highestWin == "") { 
 					highestWin = item;
 				}
 				else {
-					highestWin = (highestWin.style.zIndex > item.style.zIndex) && highestWin || item; // if bigger z-index then rewrite
+					highestWin = 
+					  highestWin.style.zIndex > item.style.zIndex
+						? highestWin 
+						: item; // if bigger z-index then rewrite
 				}
 			}
 		});
@@ -450,7 +457,7 @@ const remakeWindow = (e, target, info) => {
 			});
 
 			// recreate window
-			var win = Window.make(target_content_holder.firstChild || document.createElement("div"), icon_src, target.innerHTML);
+			var win = Window.make(target_content_holder.firstChild || document.createElement("div"), icon_src, target.innerHTML, [], target_content_holder.contextMenu);
 			Workspace.add(win);
 			win.style.top = window.innerHeight/2-win.offsetHeight/2+"px";
 			win.style.left = window.innerWidth/2-win.offsetWidth/2+"px";
@@ -489,17 +496,19 @@ const remakeWindow = (e, target, info) => {
 				target.hasDrag = true;
 				target.addEventListener("mousedown", e => {
 					DragAndDrop.add(e, `#${target.id}`, `#${target.id}`, undefined, dropTransition, swapTab, animateTab, undefined, remakeWindow); // add this function to tab
-			});
-			window.addEventListener("mouseup", e => {DragAndDrop.drop(e, `#${target.id}`)}); // add global drop check for this tab
-			item.addEventListener("dblclick", e => {Window.closeTab(e.currentTarget);});
-		}
+				});
+				window.addEventListener("mouseup", e => {DragAndDrop.drop(e, `#${target.id}`)}); // add global drop check for this tab
+				item.addEventListener("dblclick", e => {Window.closeTab(e.currentTarget);});
+			}
 
-		if (panel_x1 <= e.clientX && e.clientX <= panel_x2 && panel_y1 <= e.clientY && e.clientY <= panel_y2) { // if over panel
-			target_content_holder.style.display = "none";
-		}
-		else { // else tile window
-			target_content_holder.style.display = null;
-		}
+			const { clientX, clientY } = e;
+
+			if (panel_x1 <= clientX && clientX <= panel_x2 && panel_y1 <= clientY && clientY <= panel_y2) { // if over panel
+				target_content_holder.style.display = "none";
+			}
+			else { // else tile window
+				target_content_holder.style.display = null;
+			}
 
 			// move container to the selected window
 			highestWin.querySelector(".container").appendChild(target_content_holder);
@@ -536,6 +545,8 @@ const barDropTransition = (e, target, info) => {
 const insertBar = (e, target, info) => {
 	var dock = document.querySelector(".dock");
 
+	const { clientX, clientY } = e;
+
 	if (target.classList.contains("dragged")) {
 		var parentElement = target;
 		while (!parentElement.parentElement.classList.contains("dock")) {
@@ -546,10 +557,10 @@ const insertBar = (e, target, info) => {
 		var x1 = dock.offsetLeft + parentElement.offsetLeft;
 		var y1 = dock.offsetTop + parentElement.offsetTop, y2 = y1 + parentElement.offsetHeight;
 
-		if (x1 <= e.clientX && e.clientX <= (x1 + parentElement.offsetWidth) && y1 <= e.clientY && e.clientY <= y2) {
+		if (x1 <= clientX && clientX <= (x1 + parentElement.offsetWidth) && y1 <= clientY && clientY <= y2) {
 			target.style.transition = "transform 0.1s ease-in-out";
 		}
-		else if (e.clientX <= (x1 + parentElement.offsetWidth/2)) {
+		else if (clientX <= (x1 + parentElement.offsetWidth/2)) {
 			if (target.nextSibling) {
 				if (target.nextSibling.classList.contains("bar-split")) {
 					target.parentElement.removeChild(target.nextSibling);
@@ -587,14 +598,14 @@ const insertBar = (e, target, info) => {
 					var x1 = dock.offsetLeft + item.offsetLeft;
 					var y1 = dock.offsetTop + item.offsetTop, y2 = y1 + item.offsetHeight;
 
-					if (x1 <= e.clientX && e.clientX <= (x1 + item.offsetWidth/2) && y1 <= e.clientY && e.clientY <= y2) {
+					if (x1 <= clientX && clientX <= (x1 + item.offsetWidth/2) && y1 <= clientY && clientY <= y2) {
 						var spliter = document.createElement("hr");
 						spliter.classList.add("bar-split");
 						item.insertBefore(spliter, item.firstChild);
 						item.insertBefore(target, item.firstChild);
 						target.classList.add("dragged");
 					}
-					else if ((x1 + item.offsetWidth/2) <= e.clientX && e.clientX <= (x1 + item.offsetWidth) && y1 <= e.clientY && e.clientY <= y2) {
+					else if ((x1 + item.offsetWidth/2) <= clientX && clientX <= (x1 + item.offsetWidth) && y1 <= clientY && clientY <= y2) {
 						var spliter = document.createElement("hr");
 						spliter.classList.add("bar-split");
 						item.appendChild(spliter);
@@ -627,11 +638,13 @@ const swapBar = (e, target, info) => {
 				var x1 = dock.offsetLeft + item.offsetLeft;
 				var y1 = dock.offsetTop + item.offsetTop, y2 = y1 + item.offsetHeight;
 
-				if (x1 <= e.clientX && e.clientX <= (x1 + item.offsetWidth/2) && y1 <= e.clientY && e.clientY <= y2) {
+				const { clientX, clientY } = e;
+
+				if (x1 <= clientX && clientX <= (x1 + item.offsetWidth/2) && y1 <= clientY && clientY <= y2) {
 					new_pos = i;
 					if (insAfter) insAfter = false;
 				}
-				else if ((x1 + item.offsetWidth/2) <= e.clientX && e.clientX <= (x1 + item.offsetWidth) && y1 <= e.clientY && e.clientY <= y2) {
+				else if ((x1 + item.offsetWidth/2) <= clientX && clientX <= (x1 + item.offsetWidth) && y1 <= clientY && clientY <= y2) {
 					new_pos = i;
 					if (insAfter != false) insAfter = true;
 				}
@@ -729,7 +742,9 @@ const insertCheck = (e, target, info) => {
 			var y1 = item.offsetTop+targetTransformY, y2 = y1+item.offsetHeight;
 
 			// check position
-			if (x1 <= e.clientX && e.clientX <= x2 && y1 <= e.clientY && e.clientY <= y2) {
+			const { clientX, clientY } = e;
+
+			if (x1 <= clientX && clientX <= x2 && y1 <= clientY && clientY <= y2) {
 				if (!highestWin) { 
 					highestWin = item;
 				}
@@ -767,7 +782,9 @@ const insertCheck = (e, target, info) => {
 		// get current window
 		var win = document.querySelector(info.target);
 
-		if (panel_x1 <= e.clientX && e.clientX <= panel_x2 && panel_y1 <= e.clientY && e.clientY <= panel_y2) {
+		const { clientX, clientY } = e;
+
+		if (panel_x1 <= clientX && clientX <= panel_x2 && panel_y1 <= clientY && clientY <= panel_y2) {
 			Window.merge(highestWin, false, win);
 		}
 		else {
@@ -828,7 +845,9 @@ const moveIcon = (e, target, info) => {
 			var y1 = dock.offsetTop + icon_holder.offsetTop + item.offsetTop, y2 = y1 + item.offsetHeight;
 
 			// check if over
-			if (x1 <= e.clientX && e.clientX <= x2 && y1 <= e.clientY && e.clientY <= y2) {
+			const { clientX, clientY } = e;
+
+			if (x1 <= clientX && clientX <= x2 && y1 <= clientY && clientY <= y2) {
 
 				new_pos = i;
 				if (!insAfter) {
@@ -977,6 +996,7 @@ const newTab = (e, target) => {
 
 				var innerContent = item.content.cloneNode(true);
 				target_content_holder.appendChild(innerContent);
+				target_content_holder.contextMenu = item.contextMenu;
 
 				if (item.listenerAdder) {
 					item.listenerAdder(innerContent);
@@ -1040,6 +1060,10 @@ class Layer {
 	}
 
 	static set = (i) => {
+		if (typeof i != 'number') {
+			throw new Error("NaN");
+		}
+
 		Layer.#z_index = i;
 		return this;
 	}
@@ -1059,7 +1083,7 @@ class Window {
 
 	static close = (e, ...args) => {
 		for (const win of args) {
-			if (win.classList.contains("window") || win.classList.contains("static-window")) {
+			if (typeof win == 'object' && (win.classList.contains("window") || win.classList.contains("static-window"))) {
 				win.parentElement.removeChild(win);
 				var underline = document.querySelector(`#underline${win.id.match("[0-9]+")}`);
 				
@@ -1070,14 +1094,13 @@ class Window {
 				return this;
 			}
 			else {
-				console.error(`${this.name}.close: not a window`);
-				return 1;
+				throw new Error("Not a window");
 			}
 		}
 	}
 
 
-	static make = (content, icon_src, title, extraClass, makeClone, addPanel = true, addResize = true, listenerAdder = async content => {}) => {
+	static make = (content, icon_src, title, extraClass, contextMenu, makeClone, addPanel = true, addResize = true, listenerAdder = async content => {}) => {
 		var win = document.createElement("div");
 		win.classList.add(addPanel ? "window" : "static-window");
 		win.id = "window"+Window.#win_id;
@@ -1199,6 +1222,7 @@ class Window {
 		var content_holder = document.createElement("div");
 		content_holder.classList.add("content-holder");
 		content_holder.id = "content-holder"+Window.#win_id;
+		content_holder.contextMenu = contextMenu;
 
 		var icon_block = document.createElement("div");
 		icon_block.classList.add("icon-block");
@@ -1314,6 +1338,10 @@ class Window {
 	}
 
 	static merge = (main_win, ...args) => {
+		if (typeof main_win != 'object' || (!main_win.classList.contains("window") && !main_win.classList.contains("static-window"))) {
+			throw new Error("Not a window");
+		}
+
 		var is_shown = true;
 		for (const arg of args) {
 			if (typeof arg == "boolean") {
@@ -1338,7 +1366,11 @@ class Window {
 
 				// move all content to new window
 				merge_win.querySelectorAll(".content-holder").forEach(item => {
-					item.style.display = is_shown ? null : "none";
+					item.style.display = 
+					  is_shown 
+						? null 
+						: "none";
+
 					main_win.querySelector(".container").appendChild(item);
 				});
 				
@@ -1357,6 +1389,10 @@ class Window {
 
 	static closeTab = (...args) => {
 		for (const tab of args) {
+			if (typeof tab != 'object' || !tab.classList.contains("win-tab")) {
+				throw new Error("Not a tab");
+			}
+
 			var id_num = tab.id.match("[0-9]+"); // get id to catch element from window
 			var win = tab;
 			while (!win.classList.contains("window")) {
@@ -1425,7 +1461,7 @@ class Appbar {
 
 					// create window
 					var defaultFunc = async content => {};
-					var win = Window.make(item.content, item.src, item.title, item.extraClass || [], true, true, true, item.listenerAdder || defaultFunc);
+					var win = Window.make(item.content, item.src, item.title, item.extraClass || [], item.contextMenu, true, true, true, item.listenerAdder || defaultFunc);
 					Workspace.add(win);
 					win.style.transform = `translate3d(${demo_body.offsetWidth/2-win.offsetWidth/2}px, ${demo_body.offsetHeight/2-win.offsetHeight/2}px, 0)`;
 				});
@@ -1518,10 +1554,16 @@ class Scrollbar {
 			scroll_bar.addEventListener("wheel", e => {
 				if (Keylogger.getKeys().includes(16)) {
 					if (e.deltaY > 0) {
-						Scrollbar.#list.pos += parseInt((Scrollbar.#list.pos >= Scrollbar.#list.items.length-1) && `${-1*Scrollbar.#list.items.length+1}` || "1");
+						Scrollbar.#list.pos += 
+						  Scrollbar.#list.pos >= Scrollbar.#list.items.length-1
+							? -1*Scrollbar.#list.items.length+1 
+							: 1;
 					}
 					else {
-						Scrollbar.#list.pos -= parseInt((Scrollbar.#list.pos <= 0) && `${-1*Scrollbar.#list.items.length+1}` || "1");
+						Scrollbar.#list.pos -= 
+						  Scrollbar.#list.pos <= 0 
+							? -1*Scrollbar.#list.items.length+1 
+							: 1;
 					}
 					Scrollbar.set(Scrollbar.#list);
 				}
@@ -1545,13 +1587,17 @@ class Workspace {
 				document.querySelector(`#workspace${Workspace.#current_ws}`).appendChild(win);
 			}
 			else {
-				console.error(`${this.name}.add: not a window`);
+				throw new Error("Not a window");
 			}
 		}
 		return this;
 	}
 
 	static set = ws_num => {
+		if (typeof ws_num != 'number') {
+			throw new Error("NaN");
+		}
+
 		document.querySelectorAll(".workspace").forEach(item => {
 			if (!item.style.display) {
 				if (item.children.length) {
@@ -1772,3 +1818,120 @@ class Underline {
 		return underline;
 	}
 }
+
+class ContextMenu {
+
+	static defaultMenu = [
+		{
+			"type" : "plain",
+			"icon" : ContextIcons.copy,
+			"text" : "Copy"
+		},
+		{
+			"type" : "plain",
+			"icon" : ContextIcons.paste,
+			"text" : "Paste"
+		},
+		{
+			"type" : "plain",
+			"icon" : ContextIcons.cut,
+			"text" : "Cut"
+		}
+	]
+
+	static preventStacking = () => {
+		document.querySelectorAll(".context-menu").forEach(context_menu => {
+			context_menu.parentElement.removeChild(context_menu);
+		});
+	}
+
+	static make = list => {
+		var contextMenu = document.createElement("div");
+		contextMenu.classList.add("context-menu");
+		contextMenu.classList.add("noselect");
+
+		list.forEach(item => {
+			var contextItem;
+			if (item.type == "plain") {
+				contextItem = document.createElement("div");
+				contextItem.classList.add("context-menu-item");
+				var item_icon = document.createElement("div");
+				item_icon.classList.add("context-menu-item-icon");
+				item_icon.innerHTML = item.icon;
+				var item_text = document.createElement("div");
+				item_text.classList.add("context-menu-item-text");
+				item_text.innerHTML = item.text;
+				contextItem.appendChild(item_icon);
+				contextItem.appendChild(item_text);
+			}
+			else if (item.type == "split") {
+				contextItem = document.createElement("div");
+				contextItem.classList.add("context-menu-split");
+			}
+			contextMenu.appendChild(contextItem);
+		});
+		return contextMenu;
+	}
+
+	static {
+		demo_body.contextMenu = ContextMenu.defaultMenu;
+		window.addEventListener("contextmenu", e => {
+			e.preventDefault();
+			ContextMenu.preventStacking();
+
+			var path = e.composedPath();
+			var i = 0;
+			while (path[i].contextMenu == undefined && path[i] != document) {
+				i++;
+			}
+
+			var contextMenu = ContextMenu.make(path[i].contextMenu);
+			demo_body.appendChild(contextMenu);
+
+			const { clientX, clientY } = e;
+
+			const positionY =
+			  clientY + contextMenu.scrollHeight >= window.innerHeight
+				? window.innerHeight - contextMenu.scrollHeight - 20
+				: clientY;
+			const positionX =
+			  clientX + contextMenu.scrollWidth >= window.innerWidth
+				? window.innerWidth - contextMenu.scrollWidth - 20
+				: clientX;
+
+			contextMenu.setAttribute(
+			  "style",
+			  `--width: ${contextMenu.scrollWidth}px;
+			  --height: ${contextMenu.scrollHeight}px;
+			  --top: ${positionY}px;
+			  --left: ${positionX}px;`
+			);
+		});
+
+		window.addEventListener("click", e => {
+			ContextMenu.preventStacking();
+		});
+	}
+}
+
+/*
+function getSelectionText() {
+    var text = "";
+    var activeEl = document.activeElement;
+    var activeElTagName = activeEl ? activeEl.tagName.toLowerCase() : null;
+    if (
+      (activeElTagName == "textarea") || (activeElTagName == "input" &&
+      /^(?:text|search|password|tel|url)$/i.test(activeEl.type)) &&
+      (typeof activeEl.selectionStart == "number")
+    ) {
+        text = activeEl.value.slice(activeEl.selectionStart, activeEl.selectionEnd);
+    } else if (window.getSelection) {
+        text = window.getSelection().toString();
+    }
+    return text;
+}
+
+document.onmouseup = document.onkeyup = document.onselectionchange = function() {
+  console.log(getSelectionText());
+};
+*/
