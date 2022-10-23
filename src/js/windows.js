@@ -1850,6 +1850,7 @@ class ContextMenu {
 		contextMenu.classList.add("context-menu");
 		contextMenu.classList.add("noselect");
 
+		var i = 1;
 		list.forEach(item => {
 			var contextItem;
 			if (item.type == "plain") {
@@ -1868,7 +1869,9 @@ class ContextMenu {
 				contextItem = document.createElement("div");
 				contextItem.classList.add("context-menu-split");
 			}
+			contextItem.style.animationDelay = `${0.037*i+0.1}s`;
 			contextMenu.appendChild(contextItem);
+			i++;
 		});
 		return contextMenu;
 	}
