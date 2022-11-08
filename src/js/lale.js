@@ -70,6 +70,6 @@ class Lale {
 		Lale.content = lale_content;
 	}
 
-	static async listener(content) {
+	static async onclone(content) {
 	}
 }

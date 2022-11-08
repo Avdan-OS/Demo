@@ -8,21 +8,7 @@ class Filemanager {
 	static src = "src/images/demo/icons/Apps/Files.png";
 	static extraClass = ["file-manager"];
 	static contextMenu = [
-		{
-			"type" : "plain",
-			"icon" : ContextIcons.copy,
-			"text" : "Copy"
-		},
-		{
-			"type" : "plain",
-			"icon" : ContextIcons.paste,
-			"text" : "Paste"
-		},
-		{
-			"type" : "plain",
-			"icon" : ContextIcons.cut,
-			"text" : "Cut"
-		},
+		...ContextMenu.defaultMenu,
 		{
 			"type" : "plain",
 			"icon" : ContextIcons.download,
@@ -354,10 +340,10 @@ class Filemanager {
 		files_content.appendChild(files_folder_list);
 		// -- //
 
-		files_content.classList.add("noselect");
+		//files_content.classList.add("noselect");
 		Filemanager.content = files_content;
 	}
 
-	static async listener(content) {
+	static async onclone(content) {
 	}
 }

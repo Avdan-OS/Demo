@@ -369,7 +369,7 @@ class Music {
 		Music.content = music_content;
 	}
 
-	static async listener(content) {
+	static async onclone(content) {
 		var music_list_holder = content.querySelector(".music-right-side");
 
 		var music_list = document.createElement("div");

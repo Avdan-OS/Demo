@@ -10,59 +10,16 @@ var Settings = new Placeholder("Settings", "src/images/demo/icons/Apps/Settings.
 
 // -- A P P B A R  C O N F I G S
 var apps_list = [
-	{
-		"title" : Filemanager.title,				// window title
-		"src" : Filemanager.src,					// appbar/window icon
-		"content" : Filemanager.content,			// content for the window
-		"extraClass" : Filemanager.extraClass,		// extra classes for window (optional)
-		"contextMenu" : Filemanager.contextMenu		// context menu
-	},
-	{
-		"title" : Mail.title,
-		"src" : Mail.src,
-		"content" : Mail.content
-	},
-	{
-		"title" : Lale.title, 
-		"src" : Lale.src, 
-		"content" : Lale.content, 
-	},
-	{
-		"title" : Photos.title,
-		"src" : Photos.src,
-		"content" : Photos.content
-	},
-	{
-		"title" : Calendar.title,
-		"src" : Calendar.src,
-		"content" : Calendar.content
-	},
-	{
-		"title" : Notes.title,
-		"src" : Notes.src,
-		"content" : Notes.content
-	},
-	{
-		"content" : "hr"
-	},
-	{
-		"title" : Settings.title,
-		"src" : Settings.src,
-		"content" : Settings.content
-	},
-	{
-		"title" : Music.title,
-		"src" : Music.src,
-		"content" : Music.content,
-		"listenerAdder" : Music.listener
-	},
-	{
-		"title" : Messages.title, 
-		"src" : Messages.src, 
-		"content" : Messages.content, 
-		"listenerAdder" : Messages.listener, 
-		"extraClass" : Messages.extraClass 
-	},
+	Filemanager,
+	Mail,
+	Lale, 
+	Photos,
+	Calendar,
+	Notes,
+	Appbar.Split,
+	Settings,
+	Music,
+	Messages,
 ]
 
 // add apps to the appbar

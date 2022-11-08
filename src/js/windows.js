@@ -998,8 +998,8 @@ const newTab = (e, target) => {
 				target_content_holder.appendChild(innerContent);
 				target_content_holder.contextMenu = item.contextMenu;
 
-				if (item.listenerAdder) {
-					item.listenerAdder(innerContent);
+				if (item.onclone) {
+					item.onclone(innerContent);
 				}
 
 				var new_icon = document.createElement("img");
@@ -1100,7 +1100,7 @@ class Window {
 	}
 
 
-	static make = (content, icon_src, title, extraClass, contextMenu, makeClone, addPanel = true, addResize = true, listenerAdder = async content => {}) => {
+	static make = (content, icon_src, title, extraClass, contextMenu, makeClone, addPanel = true, addResize = true, onclone = async content => {}) => {
 		var win = document.createElement("div");
 		win.classList.add(addPanel ? "window" : "static-window");
 		win.id = "window"+Window.#win_id;
@@ -1305,7 +1305,7 @@ class Window {
 		content_holder.appendChild(innerContent);
 		container.appendChild(content_holder);
 
-		listenerAdder(innerContent)
+		onclone(innerContent)
 			.then(() => {})
 			.catch(() => {
 				console.error(`Failed to load dynamic window content`);
@@ -1424,6 +1424,7 @@ class Window {
 class Appbar {
 	static #list = []; // global app list for window functions
 	static app_bar = ".app-bar";
+	static Split = {"content" : "hr"};
 
 	static get = () => {
 		return Appbar.#list;
@@ -1461,7 +1462,7 @@ class Appbar {
 
 					// create window
 					var defaultFunc = async content => {};
-					var win = Window.make(item.content, item.src, item.title, item.extraClass || [], item.contextMenu, true, true, true, item.listenerAdder || defaultFunc);
+					var win = Window.make(item.content, item.src, item.title, item.extraClass || [], item.contextMenu, true, true, true, item.onclone || defaultFunc);
 					Workspace.add(win);
 					win.style.transform = `translate3d(${demo_body.offsetWidth/2-win.offsetWidth/2}px, ${demo_body.offsetHeight/2-win.offsetHeight/2}px, 0)`;
 				});
@@ -1825,7 +1826,8 @@ class ContextMenu {
 		{
 			"type" : "plain",
 			"icon" : ContextIcons.copy,
-			"text" : "Copy"
+			"text" : "Copy",
+			"callback" : e => {navigator.clipboard.writeText(getSelectionText())},
 		},
 		{
 			"type" : "plain",
@@ -1835,7 +1837,7 @@ class ContextMenu {
 		{
 			"type" : "plain",
 			"icon" : ContextIcons.cut,
-			"text" : "Cut"
+			"text" : "Cut",
 		}
 	]
 
@@ -1853,15 +1855,19 @@ class ContextMenu {
 		var i = 1;
 		list.forEach(item => {
 			var contextItem;
+			
 			if (item.type == "plain") {
 				contextItem = document.createElement("div");
 				contextItem.classList.add("context-menu-item");
+				
 				var item_icon = document.createElement("div");
 				item_icon.classList.add("context-menu-item-icon");
 				item_icon.innerHTML = item.icon;
+				
 				var item_text = document.createElement("div");
 				item_text.classList.add("context-menu-item-text");
 				item_text.innerHTML = item.text;
+
 				contextItem.appendChild(item_icon);
 				contextItem.appendChild(item_text);
 			}
@@ -1869,6 +1875,8 @@ class ContextMenu {
 				contextItem = document.createElement("div");
 				contextItem.classList.add("context-menu-split");
 			}
+			
+			contextItem.addEventListener("click", typeof item.callback == "function" ? e => item.callback(e) : undefined);
 			contextItem.style.animationDelay = `${0.037*i+0.1}s`;
 			contextMenu.appendChild(contextItem);
 			i++;
@@ -1917,7 +1925,6 @@ class ContextMenu {
 	}
 }
 
-/*
 function getSelectionText() {
     var text = "";
     var activeEl = document.activeElement;
@@ -1934,7 +1941,7 @@ function getSelectionText() {
     return text;
 }
 
+/*
 document.onmouseup = document.onkeyup = document.onselectionchange = function() {
   console.log(getSelectionText());
-};
-*/
+};*/
