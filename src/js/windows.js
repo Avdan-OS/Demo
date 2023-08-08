@@ -1384,7 +1384,7 @@ class Window {
 				Window.close(undefined, merge_win);
 			}
 		}
-		return Window;
+		return this;
 	}
 
 	static closeTab = (...args) => {

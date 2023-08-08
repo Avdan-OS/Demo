@@ -19,8 +19,7 @@ class Menu {
 		menu_main_header.classList.add("menu-main-header");
 
 		var menu_main_header_weather = document.createElement("div");
-		menu_main_header_weather.classList.add("menu-main-header-weather");
-		menu_main_header_weather.classList.add("menu-main-header-item");
+		menu_main_header_weather.classList.add("menu-main-header-weather", "menu-main-header-item");
 
 		var menu_main_header_weather_top = document.createElement("div");
 		menu_main_header_weather_top.classList.add("menu-main-header-weather-top");

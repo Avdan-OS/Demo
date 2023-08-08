@@ -8,16 +8,21 @@
 		</title>
 		<meta name="author" content="Dustyn"/>
 		<meta name="description" content="AvdanOS - The desktop you know and love."/>
+		
 		<meta name="robots" content="index, follow">
 		<meta property="og:type" content="website">
 		<meta property="og:url" content="https://Avdan.com/">
+		
 		<meta name="twitter:description" content="AvdanOS - The desktop you know and love. Read more...">
 		<meta name="twitter:card" content="summary_large_image">
 		<meta name="twitter:title" content="AvdanOS - The desktop you know and love.">
+		
 		<link rel="apple-touch-icon" sizes="180x180" href="src/images/apple-touch-icon.png">
 		<link rel="icon" type="image/png" sizes="32x32" href="src/images/favicon-32x32.png">
 		<link rel="icon" type="image/png" sizes="16x16" href="src/images/favicon-16x16.png">
-		<link rel="preload" href="src/fonts/inter.ttf" as="font">
+		
+		<!-- preloading -->
+		<link rel="preload" href="src/fonts/inter.ttf" as="font" crossOrigin="anonymous">
 		<link rel="preload" href="src/css/intro.css" as="style"/>
 		<link rel="preload" href="src/css/context_menu.css" as="style"/>
 		<link rel="preload" href="src/css/demo.css" as="style"/>
@@ -29,30 +34,42 @@
 		<link rel="preload" href="src/css/music.css" as="style"/>
 		<link rel="preload" href="src/css/menu.css" as="style"/>
 		<link rel="preload" href="src/css/placeholders.css" as="style"/>
+		<link rel="preload" href="src/images/demo/backgrounds/avdan_vert.png" as="image"/>
+
+		<!-- main CSS -->
 		<link rel="stylesheet" href="src/css/intro.css"/>
 		<link rel="stylesheet" href="src/css/context_menu.css"/>
 		<link rel="stylesheet" href="src/css/demo.css"/>
 		<link rel="stylesheet" href="src/css/window.css"/>
 		<link rel="stylesheet" href="src/css/dock.css"/>
+		
+		<!-- CSS for apps -->
 		<link rel="stylesheet" href="src/css/filemanager.css"/>
 		<link rel="stylesheet" href="src/css/lale.css"/>
 		<link rel="stylesheet" href="src/css/messages.css"/>
 		<link rel="stylesheet" href="src/css/music.css"/>
 		<link rel="stylesheet" href="src/css/menu.css"/>
 		<link rel="stylesheet" href="src/css/placeholders.css"/>
-		<link rel="preload" href="src/images/demo/backgrounds/avdan_vert.png" as="image"/>
+
+		<!-- base libraries -->
 		<script src="src/js/cookies.js" defer></script>
 		<script src="src/js/intro.js" defer></script>
 		<script src="src/js/context_menu_icons.js" defer></script>
 		<script src="src/js/drag_and_drop.js" defer></script>
 		<script src="src/js/windows.js" defer></script>
+
+		<!-- apps -->
 		<script src="src/js/placeholder.js" defer></script>
 		<script src="src/js/filemanager.js" defer></script>
 		<script src="src/js/lale.js" defer></script>
 		<script src="src/js/messages.js" defer></script>
 		<script src="src/js/music.js" defer></script>
+
+		<!-- dock & elements -->
 		<script src="src/js/menu.js" defer></script>
 		<script src="src/js/scrollbar_widget.js" defer></script>
+
+		<!-- general -->
 		<script src="src/js/demo.js" defer></script>
 		<script src="src/js/key_actions.js" defer></script>
 	</head>

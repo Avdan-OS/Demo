@@ -42,7 +42,7 @@
 
 .messages-search-chat input::placeholder, .messages-type input::placeholder {
 	font-size: 0.8rem;
-	color: var(--font-primary);
+	color: var(--font-secondary);
 }
 
 .messages-chat-list {

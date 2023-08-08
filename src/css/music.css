@@ -123,6 +123,7 @@
 }
 
 .music-right-side-music-list-line {
+	padding: 0.5rem;
 	border-radius: 0.25rem;
 	transition: background-color 0.1s ease-in-out;
 	cursor: pointer;

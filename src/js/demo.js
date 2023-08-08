@@ -7,6 +7,7 @@ var Photos = new Placeholder("Photos", "src/images/demo/icons/Apps/Gallery.png")
 var Calendar = new Placeholder("Calendar", "src/images/demo/icons/Apps/Calendar.png");
 var Notes = new Placeholder("Notes", "src/images/demo/icons/Apps/Notes.png");
 var Settings = new Placeholder("Settings", "src/images/demo/icons/Apps/Settings.png");
+var MyApp = new Placeholder("MyApp", "src/images/demo/icons/Apps/Settings.png");
 
 // -- A P P B A R  C O N F I G S
 var apps_list = [
@@ -20,6 +21,7 @@ var apps_list = [
 	Settings,
 	Music,
 	Messages,
+	MyApp,
 ]
 
 // add apps to the appbar
