@@ -1,0 +1,45 @@
+.workspace-switcher {
+  position: absolute;
+  top: 0.5rem;
+  left: 50%;
+  transform: translate(-50%, calc(-100% - 0.5rem));
+  visibility: hidden;
+  transition:
+    transform 0.25s ease-in-out,
+    visibility 0s linear 0.25s;
+  display: flex;
+  gap: 0.35rem;
+  padding: 0.35rem 0.5rem;
+  border-radius: 0.5rem;
+  backdrop-filter: blur(40px);
+  background-color: var(--glass-bg);
+  color: #fff;
+  z-index: 1000;
+}
+
+.workspace-switcher.open {
+  transform: translate(-50%, 0);
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.workspace-btn {
+  width: 1.6rem;
+  height: 1.6rem;
+  border: none;
+  border-radius: 0.3rem;
+  background-color: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.1s ease-in-out;
+
+  &:hover {
+    background-color: var(--glass-highlight);
+  }
+
+  &.active {
+    background-color: var(--glass-highlight-hover);
+  }
+}

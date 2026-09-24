@@ -1,0 +1,23 @@
+@use "sass:string";
+
+@mixin media($args...) {
+  $query: "";
+
+  @each $arg in $args {
+    $op: "";
+    @if $query != "" {
+      $op: " and ";
+    }
+
+    $wrapped: $arg;
+    @if string.index($arg, ":") and not string.index($arg, "(") {
+      $wrapped: "(" + $arg + ")";
+    }
+
+    $query: $query + $op + $wrapped;
+  }
+
+  @media #{$query} {
+    @content;
+  }
+}

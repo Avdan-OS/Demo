@@ -1,0 +1,48 @@
+[
+  {
+    "title": "Favorites",
+    "items": [
+      {
+        "src": "@assets/images/demo/icons/Files/Documents.png",
+        "label": "Documents"
+      },
+      {
+        "src": "@assets/images/demo/icons/Files/Downloads.png",
+        "label": "Downloads"
+      },
+      {
+        "src": "@assets/images/demo/icons/Files/Applications.png",
+        "label": "Applications"
+      },
+      {
+        "src": "@assets/images/demo/icons/Files/Desktop.png",
+        "label": "Desktop"
+      },
+      {
+        "src": "@assets/images/demo/icons/Files/Recents.png",
+        "label": "Recents"
+      }
+    ]
+  },
+  {
+    "title": "Pinned",
+    "items": [
+      { "src": "folder", "label": "Notes", "color": "#d06b6e" },
+      { "src": "folder", "label": "Voice Memos", "color": "#d54686" },
+      { "src": "folder", "label": "Work", "color": "#835cc0" },
+      { "src": "folder", "label": "Wallpapers", "color": "#379ea4" },
+      { "src": "folder", "label": "Project M", "color": "#519fc4" }
+    ]
+  },
+  {
+    "title": "Tags",
+    "items": [
+      { "src": "rounded", "label": "Projects", "color": "#519fc4" },
+      { "src": "rounded", "label": "Important", "color": "#d06b6e" },
+      { "src": "rounded", "label": "Sound", "color": "#d54686" },
+      { "src": "rounded", "label": "Work", "color": "#835cc0" },
+      { "src": "rounded", "label": "Travel", "color": "#d59232" },
+      { "src": "rounded", "label": "Design", "color": "#379ea4" }
+    ]
+  }
+]

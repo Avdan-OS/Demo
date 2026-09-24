@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "lib": ["esnext", "dom"],
+    "target": "ESNext",
+    "module": "ESNext",
+    "strict": true,
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "baseUrl": "./src",
+    "allowSyntheticDefaultImports": true,
+    "isolatedModules": true,
+    "moduleResolution": "Bundler",
+    "resolveJsonModule": true,
+    "types": ["vite/client"],
+    "allowJs": true,
+    "checkJs": false,
+    "paths": {
+      "@/*": ["*"],
+      "@lib/*": ["lib/*"],
+      "@styles/*": ["styles/*"],
+      "@static/*": ["static/*"],
+      "@assets/*": ["static/assets/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["node_modules"]
+}

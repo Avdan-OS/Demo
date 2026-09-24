@@ -1,0 +1,101 @@
+{
+  "select_language": "Выбрать язык",
+  "apps": {
+    "files": "Файлы",
+    "mail": "Почта",
+    "lale": "Lale",
+    "photos": "Фото",
+    "calendar": "Календарь",
+    "notes": "Заметки",
+    "settings": "Настройки",
+    "music": "Музыка",
+    "messages": "Сообщения"
+  },
+  "window": {
+    "new_tab": "Новая вкладка"
+  },
+  "placeholder": {
+    "empty": "Пока здесь ничего нет..."
+  },
+  "dropdown": {
+    "no_matches": "Нет совпадений"
+  },
+  "context_menu": {
+    "copy": "Копировать",
+    "paste": "Вставить",
+    "cut": "Вырезать",
+    "download": "Скачать",
+    "delete": "Удалить"
+  },
+  "files": {
+    "find": "Найти файл...",
+    "data": {
+      "favorites": "Избранное",
+      "pinned": "Закреплённые",
+      "tags": "Теги",
+      "recently_opened": "Недавно открытые",
+      "recommended": "Рекомендуемые",
+      "documents": "Документы",
+      "downloads": "Загрузки",
+      "applications": "Приложения",
+      "desktop": "Рабочий стол",
+      "recents": "Недавние",
+      "notes": "Заметки",
+      "voice_memos": "Голосовые записи",
+      "work": "Работа",
+      "wallpapers": "Обои",
+      "project_m": "Проект M",
+      "projects": "Проекты",
+      "important": "Важное",
+      "sound": "Звук",
+      "travel": "Путешествия",
+      "design": "Дизайн",
+      "2022_monthly_expenses": "Расходы по месяцам за 2022",
+      "instructions": "Инструкции",
+      "rental_agreement": "Договор аренды",
+      "introduction_video_aep": "Вступительное видео.aep",
+      "brand_guidelines_psd": "Руководство по бренду.psd",
+      "project_x": "Проект X",
+      "5m_ago": "5 мин назад",
+      "1h_ago": "1 ч назад",
+      "2h_ago": "2 ч назад"
+    }
+  },
+  "lale": {
+    "search": "Поиск..."
+  },
+  "messages": {
+    "search": "Поиск",
+    "type_message": "Введите сообщение"
+  },
+  "music": {
+    "home": "Главная",
+    "search": "Поиск",
+    "library": "Моя медиатека",
+    "create_playlist": "Создать плейлист",
+    "liked_songs": "Любимые треки",
+    "guest_best": "Лучшее гостя",
+    "title": "НАЗВАНИЕ",
+    "duration": "ДЛИТЕЛЬНОСТЬ"
+  },
+  "start_menu": {
+    "weather": {
+      "city": "Где-то",
+      "sunny": "Солнечно",
+      "high": "Макс",
+      "low": "Мин"
+    },
+    "reminders": {
+      "first": "Напоминание 1",
+      "second": "Напоминание 2"
+    },
+    "devices": {
+      "phone": "Мой телефон",
+      "watch": "Часы Каана",
+      "car": "Togg SUV"
+    },
+    "today": "Сегодня",
+    "pinned_apps": "Закреплённые приложения",
+    "app_setups": "Наборы приложений"
+  }
+}

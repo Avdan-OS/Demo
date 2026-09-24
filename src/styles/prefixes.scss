@@ -1,0 +1,25 @@
+@mixin prefix($property, $value, $prefixes...) {
+  @each $prefix in $prefixes {
+    $prefix-str: "";
+    @if $prefix != "std" {
+      $prefix-str: "-" + $prefix + "-";
+    }
+
+    #{$prefix-str + $property}: #{$value};
+  }
+  #{$property}: #{$value};
+}
+
+@mixin any-prefix($property, $value...) {
+  -webkit-#{$property}: $value;
+  -moz-#{$property}: $value;
+  -ms-#{$property}: $value;
+  -o-#{$property}: $value;
+  #{$property}: $value;
+}
+
+@mixin box-shadow($shadows...) {
+  -moz-box-shadow: $shadows;
+  -webkit-box-shadow: $shadows;
+  box-shadow: $shadows;
+}

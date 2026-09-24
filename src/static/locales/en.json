@@ -1,0 +1,101 @@
+{
+  "select_language": "Select Language",
+  "apps": {
+    "files": "Files",
+    "mail": "Mail",
+    "lale": "Lale",
+    "photos": "Photos",
+    "calendar": "Calendar",
+    "notes": "Notes",
+    "settings": "Settings",
+    "music": "Music",
+    "messages": "Messages"
+  },
+  "window": {
+    "new_tab": "New Tab"
+  },
+  "placeholder": {
+    "empty": "There is no content here for now..."
+  },
+  "dropdown": {
+    "no_matches": "No matches"
+  },
+  "context_menu": {
+    "copy": "Copy",
+    "paste": "Paste",
+    "cut": "Cut",
+    "download": "Download",
+    "delete": "Delete"
+  },
+  "files": {
+    "find": "Find a file...",
+    "data": {
+      "favorites": "Favorites",
+      "pinned": "Pinned",
+      "tags": "Tags",
+      "recently_opened": "Recently Opened",
+      "recommended": "Recommended",
+      "documents": "Documents",
+      "downloads": "Downloads",
+      "applications": "Applications",
+      "desktop": "Desktop",
+      "recents": "Recents",
+      "notes": "Notes",
+      "voice_memos": "Voice Memos",
+      "work": "Work",
+      "wallpapers": "Wallpapers",
+      "project_m": "Project M",
+      "projects": "Projects",
+      "important": "Important",
+      "sound": "Sound",
+      "travel": "Travel",
+      "design": "Design",
+      "2022_monthly_expenses": "2022 Monthly Expenses",
+      "instructions": "Instructions",
+      "rental_agreement": "Rental Agreement",
+      "introduction_video_aep": "Introduction Video.aep",
+      "brand_guidelines_psd": "Brand Guidelines.psd",
+      "project_x": "Project X",
+      "5m_ago": "5m ago",
+      "1h_ago": "1h ago",
+      "2h_ago": "2h ago"
+    }
+  },
+  "lale": {
+    "search": "Search..."
+  },
+  "messages": {
+    "search": "Search",
+    "type_message": "Type a message"
+  },
+  "music": {
+    "home": "Home",
+    "search": "Search",
+    "library": "Your Library",
+    "create_playlist": "Create Playlist",
+    "liked_songs": "Liked Songs",
+    "guest_best": "Guest's best",
+    "title": "TITLE",
+    "duration": "DURATION"
+  },
+  "start_menu": {
+    "weather": {
+      "city": "Somewhere",
+      "sunny": "Sunny",
+      "high": "H",
+      "low": "L"
+    },
+    "reminders": {
+      "first": "Reminder 1",
+      "second": "Reminder 2"
+    },
+    "devices": {
+      "phone": "My Phone",
+      "watch": "Kaan's Watch",
+      "car": "Togg SUV"
+    },
+    "today": "Today",
+    "pinned_apps": "Pinned Apps",
+    "app_setups": "App Setups"
+  }
+}

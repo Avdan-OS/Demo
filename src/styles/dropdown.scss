@@ -1,0 +1,117 @@
+.dropdown {
+  position: relative;
+  display: inline-block;
+  padding: 0.35rem 0.5rem;
+  border-radius: 0.5rem;
+  backdrop-filter: blur(40px);
+  background-color: var(--glass-bg);
+  color: #fff;
+  font-size: 0.8rem;
+  text-align: left;
+  outline: 0;
+
+  .select,
+  .dropdown-item {
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .select {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    min-height: 1.6rem;
+    padding: 0 0.4rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    transition: background-color 0.1s ease-in-out;
+
+    &:hover,
+    &:focus-visible {
+      background-color: var(--glass-highlight);
+      outline: 0;
+    }
+
+    > i {
+      width: 0.4rem;
+      height: 0.4rem;
+      margin-bottom: 0.15rem;
+      border-right: 2px solid currentColor;
+      border-bottom: 2px solid currentColor;
+      transform: rotate(45deg);
+      transition: transform 0.15s ease-in-out;
+    }
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    top: calc(100% + 0.35rem);
+    left: 0;
+    z-index: 7;
+    display: none;
+    flex-direction: column;
+    gap: 0.15rem;
+    box-sizing: border-box;
+    width: 100%;
+    max-height: 9rem;
+    overflow-y: auto;
+    padding: 0.35rem;
+    border-radius: 0.5rem;
+    backdrop-filter: blur(40px);
+    background-color: var(--glass-bg);
+    font-size: inherit;
+
+    .dropdown-item {
+      padding: 0.3rem 0.5rem;
+      border-radius: 0.3rem;
+      cursor: pointer;
+      transition: background-color 0.1s ease-in-out;
+
+      &:hover,
+      &:focus-visible {
+        background-color: var(--glass-highlight);
+        outline: 0;
+      }
+    }
+
+    .dropdown-no-results {
+      padding: 0.3rem 0.5rem;
+      opacity: 0.7;
+      text-align: center;
+      white-space: nowrap;
+    }
+  }
+}
+
+.dropdown[data-open="true"] {
+  .select > i {
+    margin-bottom: 0;
+    margin-top: 0.15rem;
+    transform: rotate(-135deg);
+  }
+
+  .dropdown-menu {
+    display: flex;
+  }
+}
+
+.language-corner {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.75rem;
+  z-index: 1000;
+  transform: translateY(calc(-100% - 0.5rem));
+  visibility: hidden;
+  transition:
+    transform 0.25s ease-in-out,
+    visibility 0s linear 0.25s;
+
+  &.open {
+    transform: translateY(0);
+    visibility: visible;
+    transition-delay: 0s;
+  }
+}

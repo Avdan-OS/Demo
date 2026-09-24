@@ -1,122 +1,49 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-		<title>
-			AvdanOS - It's not only a desktop environment; It's a new OS.
-		</title>
-		<meta name="author" content="Dustyn"/>
-		<meta name="description" content="AvdanOS - The desktop you know and love."/>
-		
-		<meta name="robots" content="index, follow">
-		<meta property="og:type" content="website">
-		<meta property="og:url" content="https://Avdan.com/">
-		
-		<meta name="twitter:description" content="AvdanOS - The desktop you know and love. Read more...">
-		<meta name="twitter:card" content="summary_large_image">
-		<meta name="twitter:title" content="AvdanOS - The desktop you know and love.">
-		
-		<link rel="apple-touch-icon" sizes="180x180" href="src/images/apple-touch-icon.png">
-		<link rel="icon" type="image/png" sizes="32x32" href="src/images/favicon-32x32.png">
-		<link rel="icon" type="image/png" sizes="16x16" href="src/images/favicon-16x16.png">
-		
-		<!-- preloading -->
-		<link rel="preload" href="src/fonts/inter.ttf" as="font" crossOrigin="anonymous">
-		<link rel="preload" href="src/css/intro.css" as="style"/>
-		<link rel="preload" href="src/css/context_menu.css" as="style"/>
-		<link rel="preload" href="src/css/demo.css" as="style"/>
-		<link rel="preload" href="src/css/window.css" as="style"/>
-		<link rel="preload" href="src/css/dock.css" as="style"/>
-		<link rel="preload" href="src/css/filemanager.css" as="style"/>
-		<link rel="preload" href="src/css/lale.css" as="style"/>
-		<link rel="preload" href="src/css/messages.css" as="style"/>
-		<link rel="preload" href="src/css/music.css" as="style"/>
-		<link rel="preload" href="src/css/menu.css" as="style"/>
-		<link rel="preload" href="src/css/placeholders.css" as="style"/>
-		<link rel="preload" href="src/images/demo/backgrounds/avdan_vert.png" as="image"/>
-
-		<!-- main CSS -->
-		<link rel="stylesheet" href="src/css/intro.css"/>
-		<link rel="stylesheet" href="src/css/context_menu.css"/>
-		<link rel="stylesheet" href="src/css/demo.css"/>
-		<link rel="stylesheet" href="src/css/window.css"/>
-		<link rel="stylesheet" href="src/css/dock.css"/>
-		
-		<!-- CSS for apps -->
-		<link rel="stylesheet" href="src/css/filemanager.css"/>
-		<link rel="stylesheet" href="src/css/lale.css"/>
-		<link rel="stylesheet" href="src/css/messages.css"/>
-		<link rel="stylesheet" href="src/css/music.css"/>
-		<link rel="stylesheet" href="src/css/menu.css"/>
-		<link rel="stylesheet" href="src/css/placeholders.css"/>
-
-		<!-- base libraries -->
-		<script src="src/js/cookies.js" defer></script>
-		<script src="src/js/intro.js" defer></script>
-		<script src="src/js/context_menu_icons.js" defer></script>
-		<script src="src/js/drag_and_drop.js" defer></script>
-		<script src="src/js/windows.js" defer></script>
-
-		<!-- apps -->
-		<script src="src/js/placeholder.js" defer></script>
-		<script src="src/js/filemanager.js" defer></script>
-		<script src="src/js/lale.js" defer></script>
-		<script src="src/js/messages.js" defer></script>
-		<script src="src/js/music.js" defer></script>
-
-		<!-- dock & elements -->
-		<script src="src/js/menu.js" defer></script>
-		<script src="src/js/scrollbar_widget.js" defer></script>
-
-		<!-- general -->
-		<script src="src/js/demo.js" defer></script>
-		<script src="src/js/key_actions.js" defer></script>
-	</head>
-	<body ondragstart="return false;" ondrop="return false;">
-		<div class="demo-body">
-			<div class="dock">
-				<div class="app-bar">
-				</div>
-				<div class="menu-bar">
-					<img class="menu-icon noselect" src="src/images/demo/icons/Search.png"/>
-					<svg id="avdan-menu" class="menu-icon noselect" viewBox="0 0 1125 938">
-							<defs>
-								<linearGradient id="grad1" x1="0%" y1="50%" x2="100%" y2="0%">
-									<stop offset="0%"/>
-									<stop offset="100%"/>
-								</linearGradient>
-							</defs>
-						<path d="M 328 334 L 169 73 C 174 83 142 7 227 0 L 1073 0 C 1073 0 1140 9 1119 80 L 795 605 L 524 166 C 524 166 486 116 432 166 z M 328 334 L 6 857 C 6 857 -25 908 48 938 L 904 938 C 904 938 974 924 950 855 L 795 605 L 697 762 C 697 762 650 835 594 762 z"/>
-					</svg>
-					<img class="menu-icon noselect" src="src/images/demo/icons/Dock/RecentApps.png"/>
-				</div>
-				<div class="scroll-bar">
-				</div>
-				<div class="info-bar">
-					<img class="info-icon noselect" src="src/images/demo/icons/Dock/WiFi.png"/>
-					<img class="info-icon noselect" src="src/images/demo/icons/Dock/Bluetooth.png"/>
-					<img class="info-icon noselect" src="src/images/demo/icons/Dock/Sound.png"/>
-					<img class="info-icon noselect" src="src/images/demo/icons/Dock/Battery.png"/>
-					<svg class="info-icon noselect" xmlns="http://www.w3.org/2000/svg" class="ionicon s-ion-icon" viewBox="0 0 512 512">
-						<title>Chevron Up</title>
-						<path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="48" d="M112 328l144-144 144 144" class="ionicon-fill-none"></path>
-					</svg>
-				</div>
-			</div>
-			<div class="intro">
-				<svg class="intro-title" viewBox="0 0 105 16">
-					<g transform="translate(-18.844785,-30.077762)" >
-						<path class="intro-letter" id="a1" d="M 20,45 l 7,-13.5 7,13.5"/>
-						<path class="intro-letter" id="v" d="M 32,31.5 l 7,13.5 7,-13.5"/>
-						<path class="intro-letter" id="d" d="M 49.6,31.5 l 4,0  c 8.6,0 8.6,13.5 0,13.5  l -4,0 z"/>
-						<path class="intro-letter" id="a2" d="M 62,45 l 7,-13.5 7,13.5"/>
-						<path class="intro-letter" id="n" d="M 79.2,45  l 0,-8  c 0,-7.4 10.6,-7.4 10.2,0  l 0,8"/>
-						<path class="intro-letter" id="o" d="M 97.6,38.2  c 0,-9.1 12.8,-9.1 12.8,0  0,9.1 -12.8,9.1 -12.8,0 z"/>
-						<path class="intro-letter" id="s" d="M 113.4,42 c 1.2,4.1 9,4.1 9.4,-0.6  0,-5.2 -8.6,-2.2 -8.6,-6.6  0.2,-4.4 6.4,-4.4 7.9,-0.8"/>
-					</g>
-				</svg>
-			</div>
-		</div>
-	</body>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>AvdanOS - It's not only a desktop environment; It's a new OS.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Dustyn" />
+    <meta
+      name="description"
+      content="AvdanOS - The desktop you know and love."
+    />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://avdan.org/" />
+    <meta
+      name="twitter:description"
+      content="AvdanOS - The desktop you know and love. Read more..."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="AvdanOS - The desktop you know and love."
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/logo/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/logo/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/logo/favicon-16x16.png"
+    />
+  </head>
+  <body>
+    <div id="cursor-container">
+      <div id="cursor"></div>
+    </div>
+    <div id="root"></div>
+    <script type="module" src="/src/index.tsx"></script>
+  </body>
 </html>

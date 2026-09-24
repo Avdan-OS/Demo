@@ -1,0 +1,107 @@
+@use "sass:color";
+@use "@styles/utils.scss" as utils;
+
+$button-bg-primary: #ffeba7;
+$button-bg-primary-rgb: utils.hex-to-rgb($button-bg-primary);
+
+$button-fg-primary: #102770;
+$button-fg-primary-rgb: utils.hex-to-rgb($button-fg-primary);
+
+$link-color: #3291ff;
+$link-color-dark: color.adjust($link-color, $lightness: -15%);
+$link-color-rgb: utils.hex-to-rgb($link-color);
+
+$font-primary: "Inter";
+$font-secondary: "Iosevka";
+$transition-speed: 200ms;
+
+$bg-light: #fff;
+$bg-light-rgb: utils.hex-to-rgb($bg-light);
+
+$bg-dark: #000;
+$bg-dark-rgb: utils.hex-to-rgb($bg-dark);
+
+$surface-light: #e1d2c3;
+$surface-light-rgb: utils.hex-to-rgb($surface-light);
+
+$surface-dark: #2a2b38;
+$surface-dark-rgb: utils.hex-to-rgb($surface-dark);
+
+$text-primary-light: #2b2d36;
+$text-primary-light-rgb: utils.hex-to-rgb($text-primary-light);
+
+$text-primary-hover-light: #49535f;
+$text-primary-hover-light-rgb: utils.hex-to-rgb($text-primary-hover-light);
+
+$text-primary-dark: #fff;
+$text-primary-dark-rgb: utils.hex-to-rgb($text-primary-dark);
+
+$text-primary-hover-dark: #c5c3ca;
+$text-primary-hover-dark-rgb: utils.hex-to-rgb($text-primary-hover-dark);
+
+$shadow-color: #141414;
+$shadow-color-rgb: utils.hex-to-rgb($shadow-color);
+
+$glass-bg: rgba(0, 0, 0, 0.575);
+$glass-highlight: rgba(255, 255, 255, 0.125);
+$glass-highlight-hover: rgba(255, 255, 255, 0.2);
+
+:root {
+  color-scheme: light;
+  --button-bg-primary: #{$button-bg-primary};
+  --button-bg-primary-rgb: #{$button-bg-primary-rgb};
+
+  --button-fg-primary: #{$button-fg-primary};
+  --button-fg-primary-rgb: #{$button-fg-primary-rgb};
+
+  --link-color: #{$link-color};
+  --link-color-dark: #{$link-color-dark};
+  --link-color-rgb: #{$link-color-rgb};
+
+  --font-primary: #{$font-primary};
+  --font-secondary: #{$font-secondary};
+  --transition-speed: #{$transition-speed};
+
+  --bg: #{$bg-light};
+  --bg-rgb: #{$bg-light-rgb};
+
+  --surface: #{$surface-light};
+  --surface-rgb: #{$surface-light-rgb};
+
+  --text-primary: #{$text-primary-light};
+  --text-primary-rgb: #{$text-primary-light-rgb};
+
+  --text-primary-hover: #{$text-primary-hover-light};
+  --text-primary-hover-rgb: #{$text-primary-hover-light-rgb};
+
+  --shadow-color: #{$shadow-color};
+  --shadow-color-rgb: #{$shadow-color-rgb};
+
+  --glass-bg: #{$glass-bg};
+  --glass-highlight: #{$glass-highlight};
+  --glass-highlight-hover: #{$glass-highlight-hover};
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --button-bg-primary: #{$button-bg-primary};
+  --button-bg-primary-rgb: #{$button-bg-primary-rgb};
+
+  --button-fg-primary: #{$button-fg-primary};
+  --button-fg-primary-rgb: #{$button-fg-primary-rgb};
+
+  --link-color: #{$link-color};
+  --link-color-rgb: #{$link-color-rgb};
+
+  --bg: #{$bg-dark};
+  --bg-rgb: #{$bg-dark-rgb};
+
+  --surface: #{$surface-dark};
+  --surface-rgb: #{$surface-dark-rgb};
+
+  --text-primary: #{$text-primary-dark};
+  --text-primary-rgb: #{$text-primary-dark-rgb};
+
+  --text-primary-hover: #{$text-primary-hover-dark};
+  --text-primary-hover-rgb: #{$text-primary-hover-dark-rgb};
+}

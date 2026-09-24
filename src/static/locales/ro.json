@@ -1,0 +1,101 @@
+{
+  "select_language": "Selectează limba",
+  "apps": {
+    "files": "Fișiere",
+    "mail": "E-mail",
+    "lale": "Lale",
+    "photos": "Fotografii",
+    "calendar": "Calendar",
+    "notes": "Notițe",
+    "settings": "Setări",
+    "music": "Muzică",
+    "messages": "Mesaje"
+  },
+  "window": {
+    "new_tab": "Filă nouă"
+  },
+  "placeholder": {
+    "empty": "Deocamdată nu există conținut aici..."
+  },
+  "dropdown": {
+    "no_matches": "Nicio potrivire"
+  },
+  "context_menu": {
+    "copy": "Copiază",
+    "paste": "Lipește",
+    "cut": "Taie",
+    "download": "Descarcă",
+    "delete": "Șterge"
+  },
+  "files": {
+    "find": "Caută un fișier...",
+    "data": {
+      "favorites": "Favorite",
+      "pinned": "Fixate",
+      "tags": "Etichete",
+      "recently_opened": "Deschise recent",
+      "recommended": "Recomandate",
+      "documents": "Documente",
+      "downloads": "Descărcări",
+      "applications": "Aplicații",
+      "desktop": "Desktop",
+      "recents": "Recente",
+      "notes": "Notițe",
+      "voice_memos": "Memo-uri vocale",
+      "work": "Serviciu",
+      "wallpapers": "Imagini de fundal",
+      "project_m": "Proiect M",
+      "projects": "Proiecte",
+      "important": "Important",
+      "sound": "Sunet",
+      "travel": "Călătorii",
+      "design": "Design",
+      "2022_monthly_expenses": "Cheltuieli lunare 2022",
+      "instructions": "Instrucțiuni",
+      "rental_agreement": "Contract de închiriere",
+      "introduction_video_aep": "Video de prezentare.aep",
+      "brand_guidelines_psd": "Ghid de brand.psd",
+      "project_x": "Proiect X",
+      "5m_ago": "acum 5 min",
+      "1h_ago": "acum 1 h",
+      "2h_ago": "acum 2 h"
+    }
+  },
+  "lale": {
+    "search": "Caută..."
+  },
+  "messages": {
+    "search": "Caută",
+    "type_message": "Scrie un mesaj"
+  },
+  "music": {
+    "home": "Acasă",
+    "search": "Căutare",
+    "library": "Biblioteca ta",
+    "create_playlist": "Creează playlist",
+    "liked_songs": "Melodii apreciate",
+    "guest_best": "Alese de oaspete",
+    "title": "TITLU",
+    "duration": "DURATĂ"
+  },
+  "start_menu": {
+    "weather": {
+      "city": "Undeva",
+      "sunny": "Senin",
+      "high": "Max",
+      "low": "Min"
+    },
+    "reminders": {
+      "first": "Memento 1",
+      "second": "Memento 2"
+    },
+    "devices": {
+      "phone": "Telefonul meu",
+      "watch": "Ceasul lui Kaan",
+      "car": "Togg SUV"
+    },
+    "today": "Astăzi",
+    "pinned_apps": "Aplicații fixate",
+    "app_setups": "Configurări de aplicații"
+  }
+}

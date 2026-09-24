@@ -1,0 +1,36 @@
+[
+  {
+    "title": "Recently Opened",
+    "items": [
+      {
+        "src": "@assets/images/demo/icons/Files/XLSX.png",
+        "label": "2022 Monthly Expenses",
+        "date": "5m ago"
+      },
+      {
+        "src": "@assets/images/demo/icons/Files/DOCX.png",
+        "label": "Instructions",
+        "date": "1h ago"
+      },
+      {
+        "src": "@assets/images/demo/icons/Files/PDF.png",
+        "label": "Rental Agreement",
+        "date": "2h ago"
+      }
+    ]
+  },
+  {
+    "title": "Recommended",
+    "items": [
+      {
+        "src": "@assets/images/demo/icons/Files/AEP.png",
+        "label": "Introduction Video.aep"
+      },
+      {
+        "src": "@assets/images/demo/icons/Files/PSD.png",
+        "label": "Brand Guidelines.psd"
+      },
+      { "src": "folder", "label": "Project X" }
+    ]
+  }
+]

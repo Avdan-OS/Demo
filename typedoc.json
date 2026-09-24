@@ -1,0 +1,8 @@
+{
+  "entryPoints": ["src"],
+  "entryPointStrategy": "expand",
+  "exclude": ["**/*.d.ts", "**/index.ts"],
+  "tsconfig": "tsconfig.json",
+  "out": "docs",
+  "skipErrorChecking": true
+}
