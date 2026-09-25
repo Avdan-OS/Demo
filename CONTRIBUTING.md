@@ -6,6 +6,7 @@ project, the conventions the code follows, and the most common changes.
 ## Table of contents
 
 - [Workflow](#workflow)
+  - [Branches](#branches)
 - [Before you commit](#before-you-commit)
 - [Code conventions](#code-conventions)
 - [Documenting code](#documenting-code)
@@ -19,12 +20,28 @@ project, the conventions the code follows, and the most common changes.
 
 ## Workflow
 
-1. Fork the repository and create a branch from `main`.
+1. Fork the repository and create a branch from `dev` (see [Branches](#branches)).
 2. Install dependencies with `npm ci` and start the dev server with `npm run dev`
    (<http://localhost:5173>). See the [README](README.md#scripts) for all scripts.
 3. Make your change, keeping it focused on one thing.
-4. Run the checks below, then open a pull request that explains what changed
-   and why. Add screenshots or a short recording for anything visual.
+4. Run the checks below, then open a pull request **into `dev`** that explains
+   what changed and why. Add screenshots or a short recording for anything
+   visual.
+
+### Branches
+
+| Branch      | Purpose                                                                                                                    |
+| ----------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `main`      | Stable code. Every push to it builds the project and deploys the site to GitHub Pages. Nothing is committed here directly. |
+| `dev`       | Integration branch. All new work lands here first. It is not deployed.                                                     |
+| your branch | Short-lived branch for one change, created from `dev` (for example `fix-dock-icons`).                                      |
+
+- Open pull requests against `dev`, not `main`.
+- When `dev` is stable, a maintainer merges it into `main` through a pull
+  request and tags the release (for example `v0.5.0`).
+- Keep your branch up to date with `git fetch` and `git rebase origin/dev`.
+- A hotfix for the live site is the only exception: branch from `main`, open the
+  pull request into `main`, and merge `main` back into `dev` afterwards.
 
 ## Before you commit
 

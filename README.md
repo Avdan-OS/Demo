@@ -101,7 +101,7 @@ compiled by Vite.
 > `npm run build` first runs `npm run gen:lib` and `npm run format`, so it can
 > rewrite files in your working tree. Commit or stash your work before building.
 
-Pushing to `main` builds the project and deploys `dist/` to GitHub Pages (see
+Pushing to `main` builds the project and deploys `dist/` to GitHub Pages; work in progress lives in `dev`, which is not deployed (see
 `.github/workflows/pages.yml`).
 
 ## Project structure
