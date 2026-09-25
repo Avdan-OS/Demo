@@ -16,6 +16,9 @@
   "keywords": [],
   "author": "",
   "license": "GPL-3.0-only",
+  "engines": {
+    "node": ">=26"
+  },
   "type": "commonjs",
   "devDependencies": {
     "@eslint/js": "^9.28.0",

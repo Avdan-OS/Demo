@@ -69,7 +69,10 @@ The live demo is [here](https://avdan-os.github.io/Demo).
 
 ## Getting started
 
-You need [Node.js](https://nodejs.org/) 20 or newer (the deploy workflow uses 20).
+You need [Node.js](https://nodejs.org/) 26 or newer. The version is pinned in
+`.nvmrc`, so with [nvm](https://github.com/nvm-sh/nvm) or
+[fnm](https://github.com/Schniz/fnm) run `nvm use` (or `fnm use`) in the project
+folder. The deploy workflow reads the same file.
 
 ```sh
 git clone <this repository>

@@ -100,6 +100,8 @@ export default defineConfig({
     strictPort: true,
   },
 
+  // Public base path. Set VITE_BASE_PATH (e.g. "/Demo/") when the site is not served from the domain root.
+  base: process.env.VITE_BASE_PATH ?? "/",
   optimizeDeps: {},
   root: path.resolve(__dirname),
   publicDir: path.resolve(__dirname, "public"),
